@@ -7,6 +7,10 @@
 
     public class Lexer
     {
+        public Lexer(string text)
+        {
+        }
+
         public Token NextToken()
         {
             return null;

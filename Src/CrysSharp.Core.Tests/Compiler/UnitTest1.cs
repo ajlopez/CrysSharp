@@ -10,7 +10,7 @@
         [TestMethod]
         public void NextTokenIsNull()
         {
-            Lexer lexer = new Lexer();
+            Lexer lexer = new Lexer("");
 
             Assert.IsNull(lexer.NextToken());
         }
