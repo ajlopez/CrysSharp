@@ -19,7 +19,7 @@
             if (text == null || text.Length == 0)
                 return null;
 
-            var token = new Token(TokenType.Name, text);
+            var token = new Token(TokenType.Name, text.Trim());
 
             text = null;
 
