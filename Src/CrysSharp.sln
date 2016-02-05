@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrysSharp.Core", "CrysSharp.Core\CrysSharp.Core.csproj", "{5A499B5C-1D0E-4B83-8855-066C92C48B83}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrysSharp.Core.Tests", "CrysSharp.Core.Tests\CrysSharp.Core.Tests.csproj", "{91CD620C-06D6-438C-B667-13421D36D265}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5CF4B4CE-4FBF-4C45-87F9-30038585C03E}"
+	ProjectSection(SolutionItems) = preProject
+		CrysSharp.vsmdi = CrysSharp.vsmdi
+		Local.testsettings = Local.testsettings
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = CrysSharp.vsmdi
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5A499B5C-1D0E-4B83-8855-066C92C48B83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A499B5C-1D0E-4B83-8855-066C92C48B83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A499B5C-1D0E-4B83-8855-066C92C48B83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A499B5C-1D0E-4B83-8855-066C92C48B83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91CD620C-06D6-438C-B667-13421D36D265}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91CD620C-06D6-438C-B667-13421D36D265}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91CD620C-06D6-438C-B667-13421D36D265}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91CD620C-06D6-438C-B667-13421D36D265}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
