@@ -16,12 +16,12 @@
 
         public Token NextToken()
         {
-            if (text == null || text.Length == 0)
+            if (this.text == null || this.text.Length == 0)
                 return null;
 
-            var token = new Token(TokenType.Name, text.Trim());
+            var token = new Token(TokenType.Name, this.text.Trim());
 
-            text = null;
+            this.text = null;
 
             return token;
         }
