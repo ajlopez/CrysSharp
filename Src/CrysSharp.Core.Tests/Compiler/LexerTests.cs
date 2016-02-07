@@ -1,10 +1,10 @@
 ﻿namespace CrysSharp.Core.Tests.Compiler
 {
     using System;
-    using CrysSharp.Core.Compiler;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using CrysSharp.Core.Exceptions;
     using System.IO;
+    using CrysSharp.Core.Compiler;
+    using CrysSharp.Core.Exceptions;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
     public class LexerTests

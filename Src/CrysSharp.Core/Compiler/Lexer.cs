@@ -2,9 +2,9 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Text;
-    using System.IO;
     using CrysSharp.Core.Exceptions;
 
     public class Lexer
@@ -286,7 +286,7 @@
 
                 if (ich > 0 && (char)ich == StartComment)
                 {
-                    for (ich = this.stream.NextChar(); ich >= 0 && (char)ich != '\n'; )
+                    for (ich = this.stream.NextChar(); ich >= 0 && (char)ich != '\n';)
                         ich = this.stream.NextChar();
 
                     if (ich < 0)
