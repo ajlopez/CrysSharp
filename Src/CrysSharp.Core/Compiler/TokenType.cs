@@ -7,6 +7,7 @@
 
     public enum TokenType
     {
+        Nil = 0,
         Name = 1,
         Integer = 2,
         Real = 3,

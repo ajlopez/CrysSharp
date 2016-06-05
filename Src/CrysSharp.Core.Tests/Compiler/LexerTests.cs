@@ -832,5 +832,18 @@
             Assert.AreEqual(TokenType.Name, result.Type);
             Assert.AreEqual("two", result.Value);
         }
+
+        [TestMethod]
+        public void GetNil()
+        {
+            Lexer lexer = new Lexer("nil");
+            var result = lexer.NextToken();
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual("nil", result.Value);
+            Assert.AreEqual(TokenType.Nil, result.Type);
+
+            Assert.IsNull(lexer.NextToken());
+        }
     }
 }

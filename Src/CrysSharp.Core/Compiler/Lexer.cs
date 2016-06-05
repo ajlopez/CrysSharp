@@ -119,6 +119,9 @@
             if (ich >= 0)
                 this.BackChar();
 
+            if (value == "nil")
+                return new Token(TokenType.Nil, value);
+
             return new Token(TokenType.Name, value);
         }
 
