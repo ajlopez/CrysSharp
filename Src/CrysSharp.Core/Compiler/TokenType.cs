@@ -12,11 +12,12 @@
         Integer = 2,
         Real = 3,
         String = 4,
-        Operator = 5,
-        Separator = 6,
-        Symbol = 7,
-        InstanceVarName = 8,
-        ClassVarName = 9,
-        EndOfLine = 10
+        Boolean = 5,
+        Operator = 6,
+        Separator = 7,
+        Symbol = 8,
+        InstanceVarName = 9,
+        ClassVarName = 10,
+        EndOfLine = 11
     }
 }

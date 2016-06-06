@@ -122,6 +122,9 @@
             if (value == "nil")
                 return new Token(TokenType.Nil, value);
 
+            if (value == "false")
+                return new Token(TokenType.Boolean, value);
+
             return new Token(TokenType.Name, value);
         }
 
