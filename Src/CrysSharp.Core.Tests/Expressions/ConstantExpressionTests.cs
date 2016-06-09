@@ -7,6 +7,7 @@
     using CrysSharp.Core.Expressions;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+    [TestClass]
     public class ConstantExpressionTests
     {
         [TestMethod]
