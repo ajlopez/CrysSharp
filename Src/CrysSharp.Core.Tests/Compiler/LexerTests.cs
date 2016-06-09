@@ -858,5 +858,18 @@
 
             Assert.IsNull(lexer.NextToken());
         }
+
+        [TestMethod]
+        public void GetTrue()
+        {
+            Lexer lexer = new Lexer("true");
+            var result = lexer.NextToken();
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual("true", result.Value);
+            Assert.AreEqual(TokenType.Boolean, result.Type);
+
+            Assert.IsNull(lexer.NextToken());
+        }
     }
 }
