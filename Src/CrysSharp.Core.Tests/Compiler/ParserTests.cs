@@ -17,5 +17,13 @@
 
             Assert.IsNull(parser.ParseExpression());
         }
+
+        [TestMethod]
+        public void ParseNullString()
+        {
+            Parser parser = new Parser(null);
+
+            Assert.IsNull(parser.ParseExpression());
+        }
     }
 }
