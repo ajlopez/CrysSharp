@@ -8,12 +8,20 @@
 
     public class Parser
     {
+        Lexer lexer;
+
         public Parser(string text)
         {
+            this.lexer = new Lexer(text);
         }
 
         public NameExpression ParseExpression()
         {
+            var token = this.lexer.NextToken();
+
+            if (token == null)
+                return null;
+
             return null;
         }
     }

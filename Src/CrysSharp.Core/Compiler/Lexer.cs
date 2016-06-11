@@ -25,7 +25,7 @@
 
         public Lexer(string text)
         {
-            this.stream = new TextCharStream(text);
+            this.stream = new TextCharStream(text == null ? string.Empty : text);
         }
 
         public Lexer(TextReader reader)
