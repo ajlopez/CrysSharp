@@ -22,7 +22,7 @@
             if (token == null)
                 return null;
 
-            return null;
+            return new NameExpression(token.Value);
         }
     }
 }

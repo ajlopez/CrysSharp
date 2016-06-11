@@ -25,5 +25,18 @@
 
             Assert.IsNull(parser.ParseExpression());
         }
+
+        [TestMethod]
+        public void ParseName()
+        {
+            Parser parser = new Parser("foo");
+
+            var result = parser.ParseExpression();
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual("foo", result.Name);
+
+            Assert.IsNull(parser.ParseExpression());
+        }
     }
 }
