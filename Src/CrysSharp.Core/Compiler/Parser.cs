@@ -15,7 +15,7 @@
             this.lexer = new Lexer(text);
         }
 
-        public NameExpression ParseExpression()
+        public IExpression ParseExpression()
         {
             var token = this.lexer.NextToken();
 

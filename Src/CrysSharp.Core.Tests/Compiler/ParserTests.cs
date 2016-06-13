@@ -6,6 +6,7 @@
     using System.Linq;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using CrysSharp.Core.Compiler;
+    using CrysSharp.Core.Expressions;
 
     [TestClass]
     public class ParserTests
@@ -34,7 +35,8 @@
             var result = parser.ParseExpression();
 
             Assert.IsNotNull(result);
-            Assert.AreEqual("foo", result.Name);
+            Assert.IsInstanceOfType(result, typeof(IExpression));
+            Assert.AreEqual("foo", ((NameExpression)result).Name);
 
             Assert.IsNull(parser.ParseExpression());
         }
