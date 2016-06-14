@@ -35,8 +35,22 @@
             var result = parser.ParseExpression();
 
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(IExpression));
+            Assert.IsInstanceOfType(result, typeof(NameExpression));
             Assert.AreEqual("foo", ((NameExpression)result).Name);
+
+            Assert.IsNull(parser.ParseExpression());
+        }
+
+        [TestMethod]
+        public void ParseString()
+        {
+            Parser parser = new Parser("\"foo\"");
+
+            var result = parser.ParseExpression();
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(ConstantExpression));
+            Assert.AreEqual("foo", ((ConstantExpression)result).Value);
 
             Assert.IsNull(parser.ParseExpression());
         }
