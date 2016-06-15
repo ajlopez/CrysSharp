@@ -54,5 +54,19 @@
 
             Assert.IsNull(parser.ParseExpression());
         }
+
+        [TestMethod]
+        public void ParseInteger()
+        {
+            Parser parser = new Parser("42");
+
+            var result = parser.ParseExpression();
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(ConstantExpression));
+            Assert.AreEqual(42, ((ConstantExpression)result).Value);
+
+            Assert.IsNull(parser.ParseExpression());
+        }
     }
 }
