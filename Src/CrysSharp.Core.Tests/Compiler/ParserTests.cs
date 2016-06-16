@@ -68,5 +68,19 @@
 
             Assert.IsNull(parser.ParseExpression());
         }
+
+        [TestMethod]
+        public void ParseReal()
+        {
+            Parser parser = new Parser("3.1416");
+
+            var result = parser.ParseExpression();
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(ConstantExpression));
+            Assert.AreEqual(3.1416, ((ConstantExpression)result).Value);
+
+            Assert.IsNull(parser.ParseExpression());
+        }
     }
 }

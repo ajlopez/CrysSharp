@@ -28,6 +28,9 @@
             if (token.Type == TokenType.Integer)
                 return new ConstantExpression(int.Parse(token.Value));
 
+            if (token.Type == TokenType.Real)
+                return new ConstantExpression(double.Parse(token.Value));
+
             return new NameExpression(token.Value);
         }
     }
