@@ -31,6 +31,10 @@
             if (token.Type == TokenType.Real)
                 return new ConstantExpression(double.Parse(token.Value));
 
+            if (token.Type == TokenType.Boolean)
+                if (token.Value == "true")
+                    return new ConstantExpression(true);
+
             return new NameExpression(token.Value);
         }
     }
