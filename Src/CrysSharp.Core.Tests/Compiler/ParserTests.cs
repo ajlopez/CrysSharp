@@ -96,5 +96,19 @@
 
             Assert.IsNull(parser.ParseExpression());
         }
+
+        [TestMethod]
+        public void ParseFalse()
+        {
+            Parser parser = new Parser("false");
+
+            var result = parser.ParseExpression();
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(ConstantExpression));
+            Assert.AreEqual(false, ((ConstantExpression)result).Value);
+
+            Assert.IsNull(parser.ParseExpression());
+        }
     }
 }
