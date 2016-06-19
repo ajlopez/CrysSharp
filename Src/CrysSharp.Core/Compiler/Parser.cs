@@ -22,6 +22,9 @@
             if (token == null)
                 return null;
 
+            if (token.Type == TokenType.Nil)
+                return new ConstantExpression(null);
+
             if (token.Type == TokenType.String)
                 return new ConstantExpression(token.Value);
 
