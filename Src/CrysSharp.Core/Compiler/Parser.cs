@@ -24,8 +24,12 @@
 
             var token = this.lexer.NextToken();
 
-            if (token != null && token.Type == TokenType.Operator && token.Value == "+")
-                expr = new AddExpression(expr, this.ParseExpression());
+            if (token != null && token.Type == TokenType.Operator) { 
+                if (token.Value == "+")
+                    expr = new AddExpression(expr, this.ParseExpression());
+                else if (token.Value == "-")
+                    expr = new SubtractExpression(expr, this.ParseExpression());
+            }
             else
                 this.lexer.PushToken(token);
 
