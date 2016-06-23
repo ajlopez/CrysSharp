@@ -31,6 +31,8 @@
                     expr = new SubtractExpression(expr, this.ParseExpression());
                 else if (token.Value == "*")
                     expr = new MultiplyExpression(expr, this.ParseExpression());
+                else if (token.Value == "/")
+                    expr = new DivideExpression(expr, this.ParseExpression());
             }
             else
                 this.lexer.PushToken(token);
