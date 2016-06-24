@@ -768,18 +768,18 @@
         }
 
         [TestMethod]
-        public void GetFourArithmeticOperators()
+        public void GetFiveArithmeticOperators()
         {
-            Lexer lexer = new Lexer("+ - * /");
+            Lexer lexer = new Lexer("+ - * / %");
 
-            for (int k = 0; k < 4; k++)
+            for (int k = 0; k < 5; k++)
             {
                 var result = lexer.NextToken();
                 Assert.IsNotNull(result);
                 Assert.AreEqual(TokenType.Operator, result.Type);
                 Assert.IsNotNull(result.Value);
                 Assert.AreEqual(1, result.Value.Length);
-                Assert.AreEqual("+-*/"[k], result.Value[0]);
+                Assert.AreEqual("+-*/%"[k], result.Value[0]);
             }
 
             Assert.IsNull(lexer.NextToken());
