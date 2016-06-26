@@ -280,5 +280,31 @@
 
             Assert.IsNull(parser.ParseExpression());
         }
+
+        [TestMethod]
+        public void ParseLogicalAndBooleans()
+        {
+            Parser parser = new Parser("true&&false");
+
+            var result = parser.ParseExpression();
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(LogicalAndExpression));
+
+            var subexpr = (LogicalAndExpression)result;
+
+            var lexpr = subexpr.LeftExpression;
+            var rexpr = subexpr.RightExpression;
+
+            Assert.IsNotNull(lexpr);
+            Assert.IsInstanceOfType(lexpr, typeof(ConstantExpression));
+            Assert.AreEqual(true, ((ConstantExpression)lexpr).Value);
+
+            Assert.IsNotNull(rexpr);
+            Assert.IsInstanceOfType(rexpr, typeof(ConstantExpression));
+            Assert.AreEqual(false, ((ConstantExpression)rexpr).Value);
+
+            Assert.IsNull(parser.ParseExpression());
+        }
     }
 }
