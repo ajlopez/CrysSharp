@@ -50,6 +50,7 @@
     <Compile Include="Exceptions\SyntaxError.cs" />
     <Compile Include="Expressions\AddExpression.cs" />
     <Compile Include="Expressions\ConstantExpression.cs" />
+    <Compile Include="Expressions\BinaryAndExpression.cs" />
     <Compile Include="Expressions\LogicalOrExpression.cs" />
     <Compile Include="Expressions\LogicalAndExpression.cs" />
     <Compile Include="Expressions\EqualsExpression.cs" />
