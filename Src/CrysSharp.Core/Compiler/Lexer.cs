@@ -16,9 +16,9 @@
         private const char EndOfLine = '\n';
         private const char Variable = '@';
 
-        private const string Separators = ";()[],.|{}";
+        private const string Separators = ";()[],.{}";
 
-        private static string[] operators = new string[] { "+", "-", "*", "/", "%", "=", "<", ">", "!", "==", "<=", ">=", "!=", "=>", "..", "&", "&&", "||" };
+        private static string[] operators = new string[] { "+", "-", "*", "/", "%", "=", "<", ">", "!", "==", "<=", ">=", "!=", "=>", "..", "&", "|", "&&", "||" };
 
         private ICharStream stream;
         private Stack<Token> tokens = new Stack<Token>();
