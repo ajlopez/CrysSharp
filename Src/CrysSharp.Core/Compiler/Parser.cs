@@ -43,6 +43,8 @@
                     expr = new LogicalOrExpression(expr, this.ParseExpression());
                 else if (token.Value == "&")
                     expr = new BinaryAndExpression(expr, this.ParseExpression());
+                else if (token.Value == "|")
+                    expr = new BinaryOrExpression(expr, this.ParseExpression());
             }
             else
                 this.lexer.PushToken(token);
