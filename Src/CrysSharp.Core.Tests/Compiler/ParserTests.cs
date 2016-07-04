@@ -334,6 +334,27 @@
         }
 
         [TestMethod]
+        public void ParseBinaryNotInteger()
+        {
+            Parser parser = new Parser("~3");
+
+            var result = parser.ParseExpression();
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(BinaryNotExpression));
+
+            var notexpr = (BinaryNotExpression)result;
+
+            var expr = notexpr.Expression;
+
+            Assert.IsNotNull(expr);
+            Assert.IsInstanceOfType(expr, typeof(ConstantExpression));
+            Assert.AreEqual(3, ((ConstantExpression)expr).Value);
+
+            Assert.IsNull(parser.ParseExpression());
+        }
+
+        [TestMethod]
         public void ParseLogicalAndBooleans()
         {
             Parser parser = new Parser("true&&false");
