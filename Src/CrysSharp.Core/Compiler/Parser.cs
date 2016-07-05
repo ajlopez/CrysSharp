@@ -17,12 +17,22 @@
 
         public IExpression ParseExpression()
         {
+            var token = this.lexer.NextToken();
+
+            if (token == null)
+                return null;
+
+            if (token.Type == TokenType.Operator && token.Value == "~")
+                return new BinaryNotExpression(this.ParseExpression());
+
+            this.lexer.PushToken(token);
+
             var expr = this.ParseTerm();
 
             if (expr == null)
                 return null;
 
-            var token = this.lexer.NextToken();
+            token = this.lexer.NextToken();
 
             if (token != null && token.Type == TokenType.Operator) { 
                 if (token.Value == "+")
