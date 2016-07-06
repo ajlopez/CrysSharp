@@ -47,6 +47,8 @@
                     expr = new ModuleExpression(expr, this.ParseExpression());
                 else if (token.Value == "==")
                     expr = new EqualsExpression(expr, this.ParseExpression());
+                else if (token.Value == "!=")
+                    expr = new NotEqualsExpression(expr, this.ParseExpression());
                 else if (token.Value == "&&")
                     expr = new LogicalAndExpression(expr, this.ParseExpression());
                 else if (token.Value == "||")
