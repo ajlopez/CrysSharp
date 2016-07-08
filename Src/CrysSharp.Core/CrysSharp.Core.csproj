@@ -53,6 +53,7 @@
     <Compile Include="Expressions\BinaryAndExpression.cs" />
     <Compile Include="Expressions\BinaryOrExpression.cs" />
     <Compile Include="Expressions\BinaryNotExpression.cs" />
+    <Compile Include="Expressions\PowerExpression.cs" />
     <Compile Include="Expressions\NotEqualsExpression.cs" />
     <Compile Include="Expressions\LogicalOrExpression.cs" />
     <Compile Include="Expressions\LogicalAndExpression.cs" />
