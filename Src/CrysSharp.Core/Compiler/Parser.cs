@@ -59,6 +59,8 @@
                     expr = new BinaryAndExpression(expr, this.ParseExpression());
                 else if (token.Value == "|")
                     expr = new BinaryOrExpression(expr, this.ParseExpression());
+                else if (token.Value == "^")
+                    expr = new BinaryXorExpression(expr, this.ParseExpression());
             }
             else
                 this.lexer.PushToken(token);
