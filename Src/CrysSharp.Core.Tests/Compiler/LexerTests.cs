@@ -660,6 +660,32 @@
         }
 
         [TestMethod]
+        public void GetLeftShiftAsOperator()
+        {
+            Lexer lexer = new Lexer("<<");
+            var result = lexer.NextToken();
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual("<<", result.Value);
+            Assert.AreEqual(TokenType.Operator, result.Type);
+
+            Assert.IsNull(lexer.NextToken());
+        }
+
+        [TestMethod]
+        public void GetRightShiftAsOperator()
+        {
+            Lexer lexer = new Lexer(">>");
+            var result = lexer.NextToken();
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(">>", result.Value);
+            Assert.AreEqual(TokenType.Operator, result.Type);
+
+            Assert.IsNull(lexer.NextToken());
+        }
+
+        [TestMethod]
         public void GetDoubleColonAsSeparator()
         {
             Lexer lexer = new Lexer("::");
