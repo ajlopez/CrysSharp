@@ -54,6 +54,7 @@
     <Compile Include="Expressions\BinaryOrExpression.cs" />
     <Compile Include="Expressions\BinaryNotExpression.cs" />
     <Compile Include="Expressions\BinaryXorExpression.cs" />
+    <Compile Include="Expressions\RightShiftExpression.cs" />
     <Compile Include="Expressions\LeftShiftExpression.cs" />
     <Compile Include="Expressions\PowerExpression.cs" />
     <Compile Include="Expressions\NotEqualsExpression.cs" />

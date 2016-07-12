@@ -282,6 +282,32 @@
         }
 
         [TestMethod]
+        public void ParseRightShiftIntegers()
+        {
+            Parser parser = new Parser("2>>3");
+
+            var result = parser.ParseExpression();
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(RightShiftExpression));
+
+            var subexpr = (RightShiftExpression)result;
+
+            var lexpr = subexpr.LeftExpression;
+            var rexpr = subexpr.RightExpression;
+
+            Assert.IsNotNull(lexpr);
+            Assert.IsInstanceOfType(lexpr, typeof(ConstantExpression));
+            Assert.AreEqual(2, ((ConstantExpression)lexpr).Value);
+
+            Assert.IsNotNull(rexpr);
+            Assert.IsInstanceOfType(rexpr, typeof(ConstantExpression));
+            Assert.AreEqual(3, ((ConstantExpression)rexpr).Value);
+
+            Assert.IsNull(parser.ParseExpression());
+        }
+
+        [TestMethod]
         public void ParseModuleIntegers()
         {
             Parser parser = new Parser("1%2");
