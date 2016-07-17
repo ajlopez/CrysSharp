@@ -67,6 +67,8 @@
                     expr = new RightShiftExpression(expr, this.ParseExpression());
                 else if (token.Value == "<=>")
                     expr = new ComparisonExpression(expr, this.ParseExpression());
+                else if (token.Value == "===")
+                    expr = new CaseEqualityExpression(expr, this.ParseExpression());
             }
             else
                 this.lexer.PushToken(token);
