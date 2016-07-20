@@ -56,6 +56,7 @@
     <Compile Include="Expressions\BinaryXorExpression.cs" />
     <Compile Include="Expressions\ComparisonExpression.cs" />
     <Compile Include="Expressions\CaseEqualityExpression.cs" />
+    <Compile Include="Expressions\GreaterEqualsExpression.cs" />
     <Compile Include="Expressions\GreaterExpression.cs" />
     <Compile Include="Expressions\LessExpression.cs" />
     <Compile Include="Expressions\RightShiftExpression.cs" />
