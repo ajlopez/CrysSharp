@@ -516,6 +516,32 @@
         }
 
         [TestMethod]
+        public void ParseLessEqualsIntegers()
+        {
+            Parser parser = new Parser("1<=2");
+
+            var result = parser.ParseExpression();
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(LessEqualsExpression));
+
+            var subexpr = (LessEqualsExpression)result;
+
+            var lexpr = subexpr.LeftExpression;
+            var rexpr = subexpr.RightExpression;
+
+            Assert.IsNotNull(lexpr);
+            Assert.IsInstanceOfType(lexpr, typeof(ConstantExpression));
+            Assert.AreEqual(1, ((ConstantExpression)lexpr).Value);
+
+            Assert.IsNotNull(rexpr);
+            Assert.IsInstanceOfType(rexpr, typeof(ConstantExpression));
+            Assert.AreEqual(2, ((ConstantExpression)rexpr).Value);
+
+            Assert.IsNull(parser.ParseExpression());
+        }
+
+        [TestMethod]
         public void ParseBinaryAndIntegers()
         {
             Parser parser = new Parser("1&2");

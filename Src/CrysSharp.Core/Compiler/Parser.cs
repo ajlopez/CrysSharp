@@ -57,6 +57,8 @@
                     expr = new GreaterExpression(expr, this.ParseExpression());
                 else if (token.Value == ">=")
                     expr = new GreaterEqualsExpression(expr, this.ParseExpression());
+                else if (token.Value == "<=")
+                    expr = new LessEqualsExpression(expr, this.ParseExpression());
                 else if (token.Value == "&&")
                     expr = new LogicalAndExpression(expr, this.ParseExpression());
                 else if (token.Value == "||")
