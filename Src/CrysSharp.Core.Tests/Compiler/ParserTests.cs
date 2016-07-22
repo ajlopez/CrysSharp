@@ -334,6 +334,32 @@
         }
 
         [TestMethod]
+        public void ParseRangeIntegers()
+        {
+            Parser parser = new Parser("1..2");
+
+            var result = parser.ParseExpression();
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(RangeExpression));
+
+            var rangexpr = (RangeExpression)result;
+
+            var lexpr = rangexpr.LeftExpression;
+            var rexpr = rangexpr.RightExpression;
+
+            Assert.IsNotNull(lexpr);
+            Assert.IsInstanceOfType(lexpr, typeof(ConstantExpression));
+            Assert.AreEqual(1, ((ConstantExpression)lexpr).Value);
+
+            Assert.IsNotNull(rexpr);
+            Assert.IsInstanceOfType(rexpr, typeof(ConstantExpression));
+            Assert.AreEqual(2, ((ConstantExpression)rexpr).Value);
+
+            Assert.IsNull(parser.ParseExpression());
+        }
+
+        [TestMethod]
         public void ParseEqualsIntegers()
         {
             Parser parser = new Parser("1==2");
