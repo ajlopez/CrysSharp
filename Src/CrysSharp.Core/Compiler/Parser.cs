@@ -93,6 +93,13 @@
             if (token == null)
                 return null;
 
+            if (token.Type == TokenType.Separator && token.Value == "(")
+            {
+                IExpression expr = this.ParseExpression();
+                this.ParseToken(TokenType.Separator, ")");
+                return expr;
+            }
+
             if (token.Type == TokenType.Nil)
                 return new ConstantExpression(null);
 
@@ -114,6 +121,14 @@
             }
 
             return new NameExpression(token.Value);
+        }
+
+        private void ParseToken(TokenType type, string value)
+        {
+            Token token = this.lexer.NextToken();
+
+            if (token == null || token.Type != type || token.Value != value)
+                throw new ParserException(string.Format("Expected '{0}'", value));
         }
     }
 }
