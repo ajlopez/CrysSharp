@@ -17,6 +17,11 @@
 
         public IExpression ParseExpression()
         {
+            return this.ParseBinaryExpression();
+        }
+
+        private IExpression ParseBinaryExpression()
+        {
             var expr = this.ParseTerm();
 
             if (expr == null)
@@ -24,7 +29,8 @@
 
             Token token = this.lexer.NextToken();
 
-            if (token != null && token.Type == TokenType.Operator) { 
+            if (token != null && token.Type == TokenType.Operator)
+            {
                 if (token.Value == "+")
                     expr = new AddExpression(expr, this.ParseExpression());
                 else if (token.Value == "-")
