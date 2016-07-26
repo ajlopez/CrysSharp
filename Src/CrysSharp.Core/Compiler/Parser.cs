@@ -29,7 +29,7 @@
 
             Token token = this.lexer.NextToken();
 
-            if (token != null && token.Type == TokenType.Operator)
+            while (token != null && token.Type == TokenType.Operator)
             {
                 if (token.Value == "+")
                     expr = new AddExpression(expr, this.ParseExpression());
@@ -75,9 +75,11 @@
                     expr = new ComparisonExpression(expr, this.ParseExpression());
                 else if (token.Value == "===")
                     expr = new CaseEqualityExpression(expr, this.ParseExpression());
+
+                token = this.lexer.NextToken();
             }
-            else
-                this.lexer.PushToken(token);
+
+            this.lexer.PushToken(token);
 
             return expr;
         }
