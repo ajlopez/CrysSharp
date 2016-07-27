@@ -32,7 +32,7 @@
             while (token != null && token.Type == TokenType.Operator)
             {
                 if (token.Value == "+")
-                    expr = new AddExpression(expr, this.ParseExpression());
+                    expr = new AddExpression(expr, this.ParseTerm());
                 else if (token.Value == "-")
                     expr = new SubtractExpression(expr, this.ParseExpression());
                 else if (token.Value == "*")
