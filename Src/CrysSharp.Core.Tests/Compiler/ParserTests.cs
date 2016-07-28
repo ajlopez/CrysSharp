@@ -199,7 +199,7 @@
             Assert.IsNotNull(lexpr);
             Assert.IsInstanceOfType(lexpr, typeof(AddExpression));
 
-            addexpr = (AddExpression)result;
+            addexpr = (AddExpression)lexpr;
 
             lexpr = addexpr.LeftExpression;
             rexpr = addexpr.RightExpression;
