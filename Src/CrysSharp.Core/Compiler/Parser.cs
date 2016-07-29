@@ -34,7 +34,7 @@
                 if (token.Value == "+")
                     expr = new AddExpression(expr, this.ParseTerm());
                 else if (token.Value == "-")
-                    expr = new SubtractExpression(expr, this.ParseExpression());
+                    expr = new SubtractExpression(expr, this.ParseTerm());
                 else if (token.Value == "*")
                     expr = new MultiplyExpression(expr, this.ParseExpression());
                 else if (token.Value == "**")
