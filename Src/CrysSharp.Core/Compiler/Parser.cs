@@ -36,7 +36,7 @@
                 else if (token.Value == "-")
                     expr = new SubtractExpression(expr, this.ParseTerm());
                 else if (token.Value == "*")
-                    expr = new MultiplyExpression(expr, this.ParseExpression());
+                    expr = new MultiplyExpression(expr, this.ParseTerm());
                 else if (token.Value == "**")
                     expr = new PowerExpression(expr, this.ParseExpression());
                 else if (token.Value == "/")
