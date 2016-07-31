@@ -322,6 +322,42 @@
         }
 
         [TestMethod]
+        public void ParseMultiplyAddThreeIntegersUsingParenthesis()
+        {
+            Parser parser = new Parser("1*(2+3)");
+
+            var result = parser.ParseExpression();
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(MultiplyExpression));
+
+            var multexpr = (MultiplyExpression)result;
+
+            var lexpr = multexpr.LeftExpression;
+            var rexpr = multexpr.RightExpression;
+
+            Assert.IsNotNull(lexpr);
+            Assert.IsInstanceOfType(lexpr, typeof(ConstantExpression));
+            Assert.AreEqual(1, ((ConstantExpression)lexpr).Value);
+
+            Assert.IsNotNull(rexpr);
+            Assert.IsInstanceOfType(rexpr, typeof(AddExpression));
+
+            var addexpr = (AddExpression)rexpr;
+
+            lexpr = addexpr.LeftExpression;
+            rexpr = addexpr.RightExpression;
+
+            Assert.AreEqual(2, ((ConstantExpression)lexpr).Value);
+
+            Assert.IsNotNull(rexpr);
+            Assert.IsInstanceOfType(rexpr, typeof(ConstantExpression));
+            Assert.AreEqual(3, ((ConstantExpression)rexpr).Value);
+
+            Assert.IsNull(parser.ParseExpression());
+        }
+
+        [TestMethod]
         public void ParseSubtractIntegers()
         {
             Parser parser = new Parser("1-2");
