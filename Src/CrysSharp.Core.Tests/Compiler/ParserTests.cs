@@ -358,6 +358,42 @@
         }
 
         [TestMethod]
+        public void ParseDivideAddThreeIntegers()
+        {
+            Parser parser = new Parser("1/2+3");
+
+            var result = parser.ParseExpression();
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(AddExpression));
+
+            var addexpr = (AddExpression)result;
+
+            var lexpr = addexpr.LeftExpression;
+            var rexpr = addexpr.RightExpression;
+
+            Assert.IsNotNull(rexpr);
+            Assert.IsInstanceOfType(rexpr, typeof(ConstantExpression));
+            Assert.AreEqual(3, ((ConstantExpression)rexpr).Value);
+
+            Assert.IsNotNull(lexpr);
+            Assert.IsInstanceOfType(lexpr, typeof(DivideExpression));
+
+            var divexpr = (DivideExpression)lexpr;
+
+            lexpr = divexpr.LeftExpression;
+            rexpr = divexpr.RightExpression;
+
+            Assert.AreEqual(1, ((ConstantExpression)lexpr).Value);
+
+            Assert.IsNotNull(rexpr);
+            Assert.IsInstanceOfType(rexpr, typeof(ConstantExpression));
+            Assert.AreEqual(2, ((ConstantExpression)rexpr).Value);
+
+            Assert.IsNull(parser.ParseExpression());
+        }
+
+        [TestMethod]
         public void ParseSubtractIntegers()
         {
             Parser parser = new Parser("1-2");

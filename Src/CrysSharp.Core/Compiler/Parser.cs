@@ -40,7 +40,7 @@
                 else if (token.Value == "**")
                     expr = new PowerExpression(expr, this.ParseExpression());
                 else if (token.Value == "/")
-                    expr = new DivideExpression(expr, this.ParseExpression());
+                    expr = new DivideExpression(expr, this.ParseTerm());
                 else if (token.Value == "%")
                     expr = new ModuleExpression(expr, this.ParseExpression());
                 else if (token.Value == "==")
