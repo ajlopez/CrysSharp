@@ -8,6 +8,16 @@
 
     public class Parser
     {
+        private static string[][] precedence = new string[][] {
+            new string[] { "==", "!=", ">", ">=", "<", "<=", "<=>", "===" },
+            new string[] { "||", "&&" },
+            new string[] { ".." },
+            new string[] { ">>", "<<", "|", "&", "^" },
+            new string[] { "+", "-" },
+            new string[] { "*", "/", "%" },
+            new string[] { "**" }
+        };
+        
         Lexer lexer;
 
         public Parser(string text)
@@ -17,64 +27,64 @@
 
         public IExpression ParseExpression()
         {
-            return this.ParseBinaryExpression();
+            return this.ParseBinaryExpression(0);
         }
 
-        private IExpression ParseBinaryExpression()
+        private IExpression ParseBinaryExpression(int level)
         {
-            var expr = this.ParseTerm();
+            if (level >= precedence.Length)
+                return this.ParseTerm();
 
-            if (expr == null)
-                return null;
+            IExpression expr = this.ParseBinaryExpression(level + 1);
 
             Token token = this.lexer.NextToken();
 
-            while (token != null && token.Type == TokenType.Operator)
+            while (token != null && token.Type == TokenType.Operator && precedence[level].Contains(token.Value))
             {
                 if (token.Value == "+")
-                    expr = new AddExpression(expr, this.ParseTerm());
+                    expr = new AddExpression(expr, this.ParseBinaryExpression(level + 1));
                 else if (token.Value == "-")
-                    expr = new SubtractExpression(expr, this.ParseTerm());
+                    expr = new SubtractExpression(expr, this.ParseBinaryExpression(level + 1));
                 else if (token.Value == "*")
-                    expr = new MultiplyExpression(expr, this.ParseTerm());
+                    expr = new MultiplyExpression(expr, this.ParseBinaryExpression(level + 1));
                 else if (token.Value == "**")
-                    expr = new PowerExpression(expr, this.ParseExpression());
+                    expr = new PowerExpression(expr, this.ParseBinaryExpression(level + 1));
                 else if (token.Value == "/")
-                    expr = new DivideExpression(expr, this.ParseTerm());
+                    expr = new DivideExpression(expr, this.ParseBinaryExpression(level + 1));
                 else if (token.Value == "%")
-                    expr = new ModuleExpression(expr, this.ParseExpression());
+                    expr = new ModuleExpression(expr, this.ParseBinaryExpression(level + 1));
                 else if (token.Value == "==")
-                    expr = new EqualsExpression(expr, this.ParseExpression());
+                    expr = new EqualsExpression(expr, this.ParseBinaryExpression(level + 1));
                 else if (token.Value == "!=")
-                    expr = new NotEqualsExpression(expr, this.ParseExpression());
+                    expr = new NotEqualsExpression(expr, this.ParseBinaryExpression(level + 1));
                 else if (token.Value == "<")
-                    expr = new LessExpression(expr, this.ParseExpression());
+                    expr = new LessExpression(expr, this.ParseBinaryExpression(level + 1));
                 else if (token.Value == ">")
-                    expr = new GreaterExpression(expr, this.ParseExpression());
+                    expr = new GreaterExpression(expr, this.ParseBinaryExpression(level + 1));
                 else if (token.Value == ">=")
-                    expr = new GreaterEqualsExpression(expr, this.ParseExpression());
+                    expr = new GreaterEqualsExpression(expr, this.ParseBinaryExpression(level + 1));
                 else if (token.Value == "<=")
-                    expr = new LessEqualsExpression(expr, this.ParseExpression());
+                    expr = new LessEqualsExpression(expr, this.ParseBinaryExpression(level + 1));
                 else if (token.Value == "..")
-                    expr = new RangeExpression(expr, this.ParseExpression());
+                    expr = new RangeExpression(expr, this.ParseBinaryExpression(level + 1));
                 else if (token.Value == "&&")
-                    expr = new LogicalAndExpression(expr, this.ParseExpression());
+                    expr = new LogicalAndExpression(expr, this.ParseBinaryExpression(level + 1));
                 else if (token.Value == "||")
-                    expr = new LogicalOrExpression(expr, this.ParseExpression());
+                    expr = new LogicalOrExpression(expr, this.ParseBinaryExpression(level + 1));
                 else if (token.Value == "&")
-                    expr = new BinaryAndExpression(expr, this.ParseExpression());
+                    expr = new BinaryAndExpression(expr, this.ParseBinaryExpression(level + 1));
                 else if (token.Value == "|")
-                    expr = new BinaryOrExpression(expr, this.ParseExpression());
+                    expr = new BinaryOrExpression(expr, this.ParseBinaryExpression(level + 1));
                 else if (token.Value == "^")
-                    expr = new BinaryXorExpression(expr, this.ParseExpression());
+                    expr = new BinaryXorExpression(expr, this.ParseBinaryExpression(level + 1));
                 else if (token.Value == "<<")
-                    expr = new LeftShiftExpression(expr, this.ParseExpression());
+                    expr = new LeftShiftExpression(expr, this.ParseBinaryExpression(level + 1));
                 else if (token.Value == ">>")
-                    expr = new RightShiftExpression(expr, this.ParseExpression());
+                    expr = new RightShiftExpression(expr, this.ParseBinaryExpression(level + 1));
                 else if (token.Value == "<=>")
-                    expr = new ComparisonExpression(expr, this.ParseExpression());
+                    expr = new ComparisonExpression(expr, this.ParseBinaryExpression(level + 1));
                 else if (token.Value == "===")
-                    expr = new CaseEqualityExpression(expr, this.ParseExpression());
+                    expr = new CaseEqualityExpression(expr, this.ParseBinaryExpression(level + 1));
 
                 token = this.lexer.NextToken();
             }

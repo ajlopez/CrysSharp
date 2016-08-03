@@ -338,12 +338,12 @@
 
             Assert.IsNotNull(lexpr);
             Assert.IsInstanceOfType(lexpr, typeof(ConstantExpression));
-            Assert.AreEqual(1, ((ConstantExpression)rexpr).Value);
+            Assert.AreEqual(1, ((ConstantExpression)lexpr).Value);
 
             Assert.IsNotNull(rexpr);
             Assert.IsInstanceOfType(rexpr, typeof(MultiplyExpression));
 
-            var multexpr = (MultiplyExpression)lexpr;
+            var multexpr = (MultiplyExpression)rexpr;
 
             lexpr = multexpr.LeftExpression;
             rexpr = multexpr.RightExpression;
@@ -358,7 +358,7 @@
         }
 
         [TestMethod]
-        public void ParseAddMultiplyThreeIntegers()
+        public void ParseAddDivideThreeIntegers()
         {
             Parser parser = new Parser("1+2/3");
 
@@ -374,12 +374,12 @@
 
             Assert.IsNotNull(lexpr);
             Assert.IsInstanceOfType(lexpr, typeof(ConstantExpression));
-            Assert.AreEqual(1, ((ConstantExpression)rexpr).Value);
+            Assert.AreEqual(1, ((ConstantExpression)lexpr).Value);
 
             Assert.IsNotNull(rexpr);
             Assert.IsInstanceOfType(rexpr, typeof(DivideExpression));
 
-            var multexpr = (DivideExpression)lexpr;
+            var multexpr = (DivideExpression)rexpr;
 
             lexpr = multexpr.LeftExpression;
             rexpr = multexpr.RightExpression;
