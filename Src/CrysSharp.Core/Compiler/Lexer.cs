@@ -114,7 +114,7 @@
             if (char.IsDigit(ch))
                 return this.NextInteger(ch);
 
-            if (char.IsLetter(ch) || ch == '_')
+            if (char.IsLetter(ch) || ch == '_' || ch == '$')
                 return this.NextName(ch);
 
             throw new SyntaxError(string.Format("unexpected '{0}'", ch));

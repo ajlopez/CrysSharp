@@ -92,6 +92,19 @@
         }
 
         [TestMethod]
+        public void GetGlobalName()
+        {
+            Lexer lexer = new Lexer("$name");
+            var result = lexer.NextToken();
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual("$name", result.Value);
+            Assert.AreEqual(TokenType.Name, result.Type);
+
+            Assert.IsNull(lexer.NextToken());
+        }
+
+        [TestMethod]
         public void SkipComment()
         {
             Lexer lexer = new Lexer("# this is a comment");
