@@ -18,6 +18,7 @@
         Symbol = 8,
         InstanceVarName = 9,
         ClassVarName = 10,
-        EndOfLine = 11
+        GlobalVarName = 11,
+        EndOfLine = 12
     }
 }

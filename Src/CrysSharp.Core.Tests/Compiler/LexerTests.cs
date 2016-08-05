@@ -98,8 +98,8 @@
             var result = lexer.NextToken();
 
             Assert.IsNotNull(result);
-            Assert.AreEqual("$name", result.Value);
-            Assert.AreEqual(TokenType.Name, result.Type);
+            Assert.AreEqual("name", result.Value);
+            Assert.AreEqual(TokenType.GlobalVarName, result.Type);
 
             Assert.IsNull(lexer.NextToken());
         }

@@ -15,6 +15,7 @@
         private const char StartComment = '#';
         private const char EndOfLine = '\n';
         private const char Variable = '@';
+        private const char Global = '$';
 
         private const string Separators = ";()[],.{}";
 
@@ -59,6 +60,9 @@
 
             if (ch == Variable)
                 return this.NextInstanceVariableName();
+
+            if (ch == Global)
+                return this.NextGlobalVariableName();
 
             if (operators.Contains(ch.ToString()))
             {
@@ -165,6 +169,17 @@
                 throw new SyntaxError("invalid instance variable name");
 
             return new Token(TokenType.InstanceVarName, value);
+        }
+
+        private Token NextGlobalVariableName()
+        {
+            string value = string.Empty;
+            int ich;
+
+            for (ich = this.NextChar(); ich >= 0 && char.IsLetterOrDigit((char)ich); ich = this.NextChar())
+                value += (char)ich;
+
+            return new Token(TokenType.GlobalVarName, value);
         }
 
         private Token NextClassVariableName()
