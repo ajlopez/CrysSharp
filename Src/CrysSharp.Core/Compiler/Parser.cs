@@ -131,6 +131,9 @@
                     return new ConstantExpression(false);
             }
 
+            if (token.Type == TokenType.GlobalVarName)
+                return new GlobalNameExpression(token.Value);
+
             return new NameExpression(token.Value);
         }
 

@@ -42,6 +42,20 @@
         }
 
         [TestMethod]
+        public void ParseGlobalName()
+        {
+            Parser parser = new Parser("$foo");
+
+            var result = parser.ParseExpression();
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(GlobalNameExpression));
+            Assert.AreEqual("foo", ((GlobalNameExpression)result).Name);
+
+            Assert.IsNull(parser.ParseExpression());
+        }
+
+        [TestMethod]
         public void ParseString()
         {
             Parser parser = new Parser("\"foo\"");
