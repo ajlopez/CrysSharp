@@ -35,8 +35,8 @@
             var result = parser.ParseExpression();
 
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(NameExpression));
-            Assert.AreEqual("foo", ((NameExpression)result).Name);
+            Assert.IsInstanceOfType(result, typeof(VariableNameExpression));
+            Assert.AreEqual("foo", ((VariableNameExpression)result).Name);
 
             Assert.IsNull(parser.ParseExpression());
         }
@@ -49,8 +49,22 @@
             var result = parser.ParseExpression();
 
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(GlobalNameExpression));
-            Assert.AreEqual("foo", ((GlobalNameExpression)result).Name);
+            Assert.IsInstanceOfType(result, typeof(GlobalVariableNameExpression));
+            Assert.AreEqual("foo", ((GlobalVariableNameExpression)result).Name);
+
+            Assert.IsNull(parser.ParseExpression());
+        }
+
+        [TestMethod]
+        public void ParseClassVariableName()
+        {
+            Parser parser = new Parser("@@foo");
+
+            var result = parser.ParseExpression();
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(ClassVariableNameExpression));
+            Assert.AreEqual("foo", ((ClassVariableNameExpression)result).Name);
 
             Assert.IsNull(parser.ParseExpression());
         }

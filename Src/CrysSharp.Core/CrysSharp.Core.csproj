@@ -57,7 +57,8 @@
     <Compile Include="Expressions\BinaryXorExpression.cs" />
     <Compile Include="Expressions\ComparisonExpression.cs" />
     <Compile Include="Expressions\CaseEqualityExpression.cs" />
-    <Compile Include="Expressions\GlobalNameExpression.cs" />
+    <Compile Include="Expressions\ClassVariableNameExpression.cs" />
+    <Compile Include="Expressions\GlobalVariableNameExpression.cs" />
     <Compile Include="Expressions\RangeExpression.cs" />
     <Compile Include="Expressions\LessEqualsExpression.cs" />
     <Compile Include="Expressions\GreaterEqualsExpression.cs" />
@@ -75,7 +76,7 @@
     <Compile Include="Expressions\MultiplyExpression.cs" />
     <Compile Include="Expressions\SubtractExpression.cs" />
     <Compile Include="Expressions\IExpression.cs" />
-    <Compile Include="Expressions\NameExpression.cs" />
+    <Compile Include="Expressions\VariableNameExpression.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

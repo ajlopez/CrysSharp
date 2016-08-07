@@ -5,12 +5,12 @@
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
-    public class NameExpressionTests
+    public class VariableNameExpressionTests
     {
         [TestMethod]
         public void CreateWithName()
         {
-            NameExpression expr = new NameExpression("foo");
+            VariableNameExpression expr = new VariableNameExpression("foo");
 
             Assert.AreEqual("foo", expr.Name);
         }

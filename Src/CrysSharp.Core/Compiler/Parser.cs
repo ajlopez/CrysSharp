@@ -132,9 +132,11 @@
             }
 
             if (token.Type == TokenType.GlobalVarName)
-                return new GlobalNameExpression(token.Value);
+                return new GlobalVariableNameExpression(token.Value);
+            if (token.Type == TokenType.ClassVarName)
+                return new ClassVariableNameExpression(token.Value);
 
-            return new NameExpression(token.Value);
+            return new VariableNameExpression(token.Value);
         }
 
         private void ParseToken(TokenType type, string value)
