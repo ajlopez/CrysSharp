@@ -56,6 +56,20 @@
         }
 
         [TestMethod]
+        public void ParseInstanceVariableName()
+        {
+            Parser parser = new Parser("@foo");
+
+            var result = parser.ParseExpression();
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(InstanceVariableNameExpression));
+            Assert.AreEqual("foo", ((InstanceVariableNameExpression)result).Name);
+
+            Assert.IsNull(parser.ParseExpression());
+        }
+
+        [TestMethod]
         public void ParseClassVariableName()
         {
             Parser parser = new Parser("@@foo");
