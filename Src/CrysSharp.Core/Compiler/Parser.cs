@@ -102,7 +102,9 @@
                 return null;
 
             if (token.Type == TokenType.Operator && token.Value == "~")
-                return new BinaryNotExpression(this.ParseTerm());
+                return new UnaryNotExpression(this.ParseTerm());
+            if (token.Type == TokenType.Operator && token.Value == "!")
+                return new LogicalNotExpression(this.ParseTerm());
 
             if (token.Type == TokenType.Separator && token.Value == "(")
             {

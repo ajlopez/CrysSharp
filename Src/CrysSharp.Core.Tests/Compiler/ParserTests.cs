@@ -1002,22 +1002,43 @@
         }
 
         [TestMethod]
-        public void ParseBinaryNotInteger()
+        public void ParseUnaryNotInteger()
         {
             Parser parser = new Parser("~3");
 
             var result = parser.ParseExpression();
 
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(BinaryNotExpression));
+            Assert.IsInstanceOfType(result, typeof(UnaryNotExpression));
 
-            var notexpr = (BinaryNotExpression)result;
+            var notexpr = (UnaryNotExpression)result;
 
             var expr = notexpr.Expression;
 
             Assert.IsNotNull(expr);
             Assert.IsInstanceOfType(expr, typeof(ConstantExpression));
             Assert.AreEqual(3, ((ConstantExpression)expr).Value);
+
+            Assert.IsNull(parser.ParseExpression());
+        }
+
+        [TestMethod]
+        public void ParseLogicalNotInteger()
+        {
+            Parser parser = new Parser("!false");
+
+            var result = parser.ParseExpression();
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(LogicalNotExpression));
+
+            var notexpr = (LogicalNotExpression)result;
+
+            var expr = notexpr.Expression;
+
+            Assert.IsNotNull(expr);
+            Assert.IsInstanceOfType(expr, typeof(ConstantExpression));
+            Assert.AreEqual(false, ((ConstantExpression)expr).Value);
 
             Assert.IsNull(parser.ParseExpression());
         }

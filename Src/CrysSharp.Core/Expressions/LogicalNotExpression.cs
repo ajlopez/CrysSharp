@@ -5,11 +5,11 @@
     using System.Linq;
     using System.Text;
 
-    public class BinaryNotExpression : IExpression
+    public class LogicalNotExpression : IExpression
     {
         private IExpression expr;
 
-        public BinaryNotExpression(IExpression expr)
+        public LogicalNotExpression(IExpression expr)
         {
             this.expr = expr;
         }

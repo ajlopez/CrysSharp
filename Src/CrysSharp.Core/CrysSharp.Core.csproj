@@ -53,7 +53,8 @@
     <Compile Include="Expressions\ConstantExpression.cs" />
     <Compile Include="Expressions\BinaryAndExpression.cs" />
     <Compile Include="Expressions\BinaryOrExpression.cs" />
-    <Compile Include="Expressions\BinaryNotExpression.cs" />
+    <Compile Include="Expressions\LogicalNotExpression.cs" />
+    <Compile Include="Expressions\UnaryNotExpression.cs" />
     <Compile Include="Expressions\BinaryXorExpression.cs" />
     <Compile Include="Expressions\ComparisonExpression.cs" />
     <Compile Include="Expressions\CaseEqualityExpression.cs" />
