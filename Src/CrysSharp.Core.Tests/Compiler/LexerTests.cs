@@ -497,9 +497,9 @@
         }
 
         [TestMethod]
-        public void GetSingleQuoteString()
+        public void GetString()
         {
-            Lexer lexer = new Lexer("'foo'");
+            Lexer lexer = new Lexer("\"foo\"");
             var result = lexer.NextToken();
 
             Assert.IsNotNull(result);
@@ -510,9 +510,22 @@
         }
 
         [TestMethod]
-        public void GetSingleQuoteStringWithCommentChar()
+        public void GetCharacter()
         {
-            Lexer lexer = new Lexer("'#foo'");
+            Lexer lexer = new Lexer("'f'");
+            var result = lexer.NextToken();
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual("f", result.Value);
+            Assert.AreEqual(TokenType.Character, result.Type);
+
+            Assert.IsNull(lexer.NextToken());
+        }
+
+        [TestMethod]
+        public void GetStringWithCommentChar()
+        {
+            Lexer lexer = new Lexer("\"#foo\"");
             var result = lexer.NextToken();
 
             Assert.IsNotNull(result);
@@ -524,23 +537,10 @@
 
         [TestMethod]
         [ExpectedException(typeof(SyntaxError))]
-        public void RaiseIfSingleQuoteStringIsNotClosed()
+        public void RaiseIfStringIsNotClosed()
         {
-            Lexer lexer = new Lexer("'foo");
+            Lexer lexer = new Lexer("\"foo");
             lexer.NextToken();
-        }
-
-        [TestMethod]
-        public void GetDoubleQuoteString()
-        {
-            Lexer lexer = new Lexer("\"foo\"");
-            var result = lexer.NextToken();
-
-            Assert.IsNotNull(result);
-            Assert.AreEqual("foo", result.Value);
-            Assert.AreEqual(TokenType.String, result.Type);
-
-            Assert.IsNull(lexer.NextToken());
         }
 
         [TestMethod]

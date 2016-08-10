@@ -7,18 +7,19 @@
 
     public enum TokenType
     {
-        Nil = 0,
-        Name = 1,
-        Integer = 2,
-        Real = 3,
-        String = 4,
-        Boolean = 5,
-        Operator = 6,
-        Separator = 7,
-        Symbol = 8,
-        InstanceVarName = 9,
-        ClassVarName = 10,
-        GlobalVarName = 11,
-        EndOfLine = 12
+        Nil,
+        Name,
+        Integer,
+        Real,
+        String,
+        Character,
+        Boolean,
+        Operator,
+        Separator,
+        Symbol,
+        InstanceVarName,
+        ClassVarName,
+        GlobalVarName,
+        EndOfLine
     }
 }

@@ -50,10 +50,10 @@
                 return new Token(TokenType.EndOfLine, "\n");
 
             if (ch == Quote)
-                return this.NextString(Quote);
+                return this.NextCharacter();
 
             if (ch == DoubleQuote)
-                return this.NextString(DoubleQuote);
+                return this.NextString();
 
             if (ch == Colon)
                 return this.NextSymbol();
@@ -227,12 +227,12 @@
             return new Token(TokenType.Symbol, value);
         }
 
-        private Token NextString(char init)
+        private Token NextString()
         {
             string value = string.Empty;
             int ich;
 
-            for (ich = this.NextChar(); ich >= 0 && ((char)ich) != init; ich = this.NextChar())
+            for (ich = this.NextChar(); ich >= 0 && ((char)ich) != DoubleQuote; ich = this.NextChar())
             {
                 char ch = (char)ich;
 
@@ -274,6 +274,19 @@
                 throw new SyntaxError("unclosed string");
 
             return new Token(TokenType.String, value);
+        }
+
+        private Token NextCharacter()
+        {
+            string value = string.Empty;
+            int ich;
+
+            char ch = (char)this.NextChar();
+
+            if ((char)this.NextChar() != Quote)
+                throw new SyntaxError("unclosed character");
+
+            return new Token(TokenType.Character, ch.ToString());
         }
 
         private Token NextInteger(char ch)
