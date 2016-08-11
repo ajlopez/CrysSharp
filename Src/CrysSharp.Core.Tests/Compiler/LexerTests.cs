@@ -565,6 +565,14 @@
         }
 
         [TestMethod]
+        [ExpectedException(typeof(SyntaxError))]
+        public void RaiseIfCharacterIsNotClosed()
+        {
+            Lexer lexer = new Lexer("\'f");
+            lexer.NextToken();
+        }
+
+        [TestMethod]
         public void GetAssignOperator()
         {
             Lexer lexer = new Lexer("=");
