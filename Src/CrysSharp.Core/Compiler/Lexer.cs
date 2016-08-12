@@ -279,14 +279,29 @@
         private Token NextCharacter()
         {
             string value = string.Empty;
-            int ich;
 
             char ch = (char)this.NextChar();
+
+            if (ch == '\\')
+            {
+                char ch2 = (char)this.NextChar();
+
+                if (ch2 == 't')
+                    value += '\t';
+                else if (ch2 == 'r')
+                    value += '\r';
+                else if (ch2 == 'n')
+                    value += '\n';
+                else
+                    value += ch2;
+            }
+            else
+                value += ch;
 
             if ((char)this.NextChar() != Quote)
                 throw new SyntaxError("unclosed character");
 
-            return new Token(TokenType.Character, ch.ToString());
+            return new Token(TokenType.Character, value);
         }
 
         private Token NextInteger(char ch)

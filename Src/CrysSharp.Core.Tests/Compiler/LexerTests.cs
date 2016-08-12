@@ -523,6 +523,32 @@
         }
 
         [TestMethod]
+        public void GetEscapedCharacters()
+        {
+            Lexer lexer = new Lexer("'\\t' '\\n' '\\r'");
+
+            var result = lexer.NextToken();
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual("\t", result.Value);
+            Assert.AreEqual(TokenType.Character, result.Type);
+
+            result = lexer.NextToken();
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual("\n", result.Value);
+            Assert.AreEqual(TokenType.Character, result.Type);
+
+            result = lexer.NextToken();
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual("\r", result.Value);
+            Assert.AreEqual(TokenType.Character, result.Type);
+
+            Assert.IsNull(lexer.NextToken());
+        }
+
+        [TestMethod]
         public void GetStringWithCommentChar()
         {
             Lexer lexer = new Lexer("\"#foo\"");
