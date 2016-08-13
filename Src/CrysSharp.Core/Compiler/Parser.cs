@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Text;
     using CrysSharp.Core.Expressions;
+    using System.Globalization;
 
     public class Parser
     {
@@ -123,7 +124,7 @@
                 return new ConstantExpression(int.Parse(token.Value));
 
             if (token.Type == TokenType.Real)
-                return new ConstantExpression(double.Parse(token.Value));
+                return new ConstantExpression(double.Parse(token.Value, CultureInfo.InvariantCulture));
 
             if (token.Type == TokenType.Boolean)
             {
