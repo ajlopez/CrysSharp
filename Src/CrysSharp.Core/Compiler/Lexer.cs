@@ -16,6 +16,7 @@
         private const char EndOfLine = '\n';
         private const char Variable = '@';
         private const char Global = '$';
+        private const char QuestionMark = '?';
 
         private const string Separators = ";()[],.{}";
 
@@ -221,7 +222,10 @@
                 if (ch == ':' && string.IsNullOrEmpty(value))
                     return new Token(TokenType.Separator, "::");
 
-                this.BackChar();
+                if (ch == QuestionMark)
+                    value += ch;
+                else
+                    this.BackChar();
             }
 
             return new Token(TokenType.Symbol, value);
