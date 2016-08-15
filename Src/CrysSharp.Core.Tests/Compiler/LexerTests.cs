@@ -231,6 +231,19 @@
         }
 
         [TestMethod]
+        public void GetSymbolEndingWithExclamationMark()
+        {
+            Lexer lexer = new Lexer(" :foo!");
+            var result = lexer.NextToken();
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual("foo!", result.Value);
+            Assert.AreEqual(TokenType.Symbol, result.Type);
+
+            Assert.IsNull(lexer.NextToken());
+        }
+
+        [TestMethod]
         public void RaiseIfSymbolStartsWithADigit()
         {
             Lexer lexer = new Lexer(":123");

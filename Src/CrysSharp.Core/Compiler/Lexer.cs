@@ -17,6 +17,7 @@
         private const char Variable = '@';
         private const char Global = '$';
         private const char QuestionMark = '?';
+        private const char ExclamationMark = '!';
 
         private const string Separators = ";()[],.{}";
 
@@ -222,7 +223,7 @@
                 if (ch == ':' && string.IsNullOrEmpty(value))
                     return new Token(TokenType.Separator, "::");
 
-                if (ch == QuestionMark)
+                if (ch == QuestionMark || ch == ExclamationMark)
                     value += ch;
                 else
                     this.BackChar();
