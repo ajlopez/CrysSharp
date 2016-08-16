@@ -206,7 +206,12 @@
             string value = string.Empty;
             int ich;
 
-            for (ich = this.NextChar(); ich >= 0 && ((char)ich == '_' || char.IsLetterOrDigit((char)ich)); ich = this.NextChar())
+            ich = this.NextChar();
+
+            if (ich >= 0 && (char)ich == DoubleQuote)
+                return new Token(TokenType.Symbol, this.NextString().Value);
+
+            for (; ich >= 0 && ((char)ich == '_' || char.IsLetterOrDigit((char)ich)); ich = this.NextChar())
             {
                 char ch = (char)ich;
 

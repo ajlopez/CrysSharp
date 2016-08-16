@@ -244,6 +244,19 @@
         }
 
         [TestMethod]
+        public void GetSymbolInDoubleQuotes()
+        {
+            Lexer lexer = new Lexer(" :\"foo bar\"");
+            var result = lexer.NextToken();
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual("foo bar", result.Value);
+            Assert.AreEqual(TokenType.Symbol, result.Type);
+
+            Assert.IsNull(lexer.NextToken());
+        }
+
+        [TestMethod]
         public void RaiseIfSymbolStartsWithADigit()
         {
             Lexer lexer = new Lexer(":123");
