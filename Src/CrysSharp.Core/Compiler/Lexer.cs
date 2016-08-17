@@ -221,7 +221,9 @@
                 value += ch;
             }
 
-            if (ich >= 0)
+            if (value == string.Empty && ich >= 0 && operators.Contains(((char)ich).ToString()))
+                value += (char)ich;
+            else if (ich >= 0)
             {
                 char ch = (char)ich;
 
