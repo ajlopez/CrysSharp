@@ -67,37 +67,7 @@
                 return this.NextGlobalVariableName();
 
             if (operators.Contains(ch.ToString()))
-            {
-                string value = ch.ToString();
-                ich = this.NextChar();
-
-                if (ich >= 0)
-                {
-                    value += (char)ich;
-
-                    if (operators.Any(op => op.StartsWith(value)))
-                    {
-                        int ich2 = this.NextChar();
-
-                        if (ich2 >= 0)
-                        {
-                            string value2 = value + (char)ich2;
-
-                            if (operators.Contains(value2))
-                                return new Token(TokenType.Operator, value2);
-
-                            this.BackChar();
-                        }
-                    }
-
-                    if (operators.Contains(value))
-                        return new Token(TokenType.Operator, value);
-
-                    this.BackChar();
-                }
-
-                return new Token(TokenType.Operator, ch.ToString());
-            }
+                return NextOperator(ref ich, ch);
             else if (operators.Any(op => op.StartsWith(ch.ToString())))
             {
                 string value = ch.ToString();
@@ -129,6 +99,39 @@
         public void PushToken(Token token)
         {
             this.tokens.Push(token);
+        }
+
+        private Token NextOperator(ref int ich, char ch)
+        {
+            string value = ch.ToString();
+            ich = this.NextChar();
+
+            if (ich >= 0)
+            {
+                value += (char)ich;
+
+                if (operators.Any(op => op.StartsWith(value)))
+                {
+                    int ich2 = this.NextChar();
+
+                    if (ich2 >= 0)
+                    {
+                        string value2 = value + (char)ich2;
+
+                        if (operators.Contains(value2))
+                            return new Token(TokenType.Operator, value2);
+
+                        this.BackChar();
+                    }
+                }
+
+                if (operators.Contains(value))
+                    return new Token(TokenType.Operator, value);
+
+                this.BackChar();
+            }
+
+            return new Token(TokenType.Operator, ch.ToString());
         }
 
         private Token NextName(char ch)
