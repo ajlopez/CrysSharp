@@ -66,9 +66,16 @@
             if (ch == Global)
                 return this.NextGlobalVariableName();
 
+            if (char.IsDigit(ch))
+                return this.NextInteger(ch);
+
+            if (char.IsLetter(ch) || ch == '_' || ch == '$')
+                return this.NextName(ch);
+
             if (operators.Contains(ch.ToString()))
                 return NextOperator(ref ich, ch);
-            else if (operators.Any(op => op.StartsWith(ch.ToString())))
+
+            if (operators.Any(op => op.StartsWith(ch.ToString())))
             {
                 string value = ch.ToString();
                 ich = this.NextChar();
@@ -86,12 +93,6 @@
 
             if (Separators.Contains(ch))
                 return new Token(TokenType.Separator, ch.ToString());
-
-            if (char.IsDigit(ch))
-                return this.NextInteger(ch);
-
-            if (char.IsLetter(ch) || ch == '_' || ch == '$')
-                return this.NextName(ch);
 
             throw new SyntaxError(string.Format("unexpected '{0}'", ch));
         }
