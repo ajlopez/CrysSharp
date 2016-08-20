@@ -1094,5 +1094,30 @@
 
             Assert.IsNull(parser.ParseExpression());
         }
+
+        [TestMethod]
+        public void ParseTuple()
+        {
+            Parser parser = new Parser("{ 1, 2, 3 }");
+
+            var result = parser.ParseExpression();
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(TupleExpression));
+
+            var tuplexpr = (TupleExpression)result;
+
+            Assert.IsNotNull(tuplexpr.Expressions);
+            Assert.AreEqual(3, tuplexpr.Expressions.Count);
+
+            Assert.IsInstanceOfType(tuplexpr.Expressions[0], typeof(ConstantExpression));
+            Assert.AreEqual(1, ((ConstantExpression)tuplexpr.Expressions[0]).Value);
+
+            Assert.IsInstanceOfType(tuplexpr.Expressions[1], typeof(ConstantExpression));
+            Assert.AreEqual(2, ((ConstantExpression)tuplexpr.Expressions[1]).Value);
+
+            Assert.IsInstanceOfType(tuplexpr.Expressions[2], typeof(ConstantExpression));
+            Assert.AreEqual(3, ((ConstantExpression)tuplexpr.Expressions[2]).Value);
+        }
     }
 }
