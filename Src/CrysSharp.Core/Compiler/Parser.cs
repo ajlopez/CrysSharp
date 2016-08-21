@@ -114,6 +114,21 @@
                 return expr;
             }
 
+            if (token.Type == TokenType.Separator && token.Value == "{")
+            {
+                List<IExpression> exprs = new List<IExpression>();
+
+                while (!this.TryParseToken(TokenType.Separator, "}"))
+                {
+                    if (exprs.Count > 0)
+                        this.ParseToken(TokenType.Separator, ",");
+
+                    exprs.Add(this.ParseExpression());
+                }
+
+                return new TupleExpression(exprs);
+            }
+
             if (token.Type == TokenType.Nil)
                 return new ConstantExpression(null);
 
@@ -150,6 +165,18 @@
 
             if (token == null || token.Type != type || token.Value != value)
                 throw new ParserException(string.Format("Expected '{0}'", value));
+        }
+
+        private bool TryParseToken(TokenType type, string value)
+        {
+            Token token = this.lexer.NextToken();
+
+            if (token != null && token.Type == type && token.Value == value)
+                return true;
+
+            this.lexer.PushToken(token);
+
+            return false;
         }
     }
 }
