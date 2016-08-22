@@ -129,6 +129,21 @@
                 return new TupleExpression(exprs);
             }
 
+            if (token.Type == TokenType.Separator && token.Value == "[")
+            {
+                List<IExpression> exprs = new List<IExpression>();
+
+                while (!this.TryParseToken(TokenType.Separator, "]"))
+                {
+                    if (exprs.Count > 0)
+                        this.ParseToken(TokenType.Separator, ",");
+
+                    exprs.Add(this.ParseExpression());
+                }
+
+                return new ArrayExpression(exprs);
+            }
+
             if (token.Type == TokenType.Nil)
                 return new ConstantExpression(null);
 

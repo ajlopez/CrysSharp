@@ -1119,5 +1119,30 @@
             Assert.IsInstanceOfType(tuplexpr.Expressions[2], typeof(ConstantExpression));
             Assert.AreEqual(3, ((ConstantExpression)tuplexpr.Expressions[2]).Value);
         }
+
+        [TestMethod]
+        public void ParseArray()
+        {
+            Parser parser = new Parser("[ 1, 2, 3 ]");
+
+            var result = parser.ParseExpression();
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(ArrayExpression));
+
+            var arrexpr = (ArrayExpression)result;
+
+            Assert.IsNotNull(arrexpr.Expressions);
+            Assert.AreEqual(3, arrexpr.Expressions.Count);
+
+            Assert.IsInstanceOfType(arrexpr.Expressions[0], typeof(ConstantExpression));
+            Assert.AreEqual(1, ((ConstantExpression)arrexpr.Expressions[0]).Value);
+
+            Assert.IsInstanceOfType(arrexpr.Expressions[1], typeof(ConstantExpression));
+            Assert.AreEqual(2, ((ConstantExpression)arrexpr.Expressions[1]).Value);
+
+            Assert.IsInstanceOfType(arrexpr.Expressions[2], typeof(ConstantExpression));
+            Assert.AreEqual(3, ((ConstantExpression)arrexpr.Expressions[2]).Value);
+        }
     }
 }
