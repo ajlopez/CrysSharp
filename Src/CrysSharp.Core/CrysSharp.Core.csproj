@@ -54,6 +54,7 @@
     <Compile Include="Expressions\BinaryAndExpression.cs" />
     <Compile Include="Expressions\BinaryOrExpression.cs" />
     <Compile Include="Expressions\ArrayExpression.cs" />
+    <Compile Include="Expressions\NamedTupleExpression.cs" />
     <Compile Include="Expressions\TupleExpression.cs" />
     <Compile Include="Expressions\LogicalNotExpression.cs" />
     <Compile Include="Expressions\UnaryNotExpression.cs" />

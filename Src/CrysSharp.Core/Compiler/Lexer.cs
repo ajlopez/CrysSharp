@@ -325,8 +325,9 @@
             string value = ch.ToString();
             int ich;
 
-            for (ich = this.NextChar(); ich >= 0 && char.IsDigit((char)ich); ich = this.NextChar())
-                value += (char)ich;
+            for (ich = this.NextChar(); ich >= 0 && (char.IsDigit((char)ich) || (char)ich == '_'); ich = this.NextChar())
+                if ((char)ich != '_')
+                    value += (char)ich;
 
             if (ich >= 0 && (char)ich == '.')
                 return this.NextReal(value);
