@@ -19,7 +19,7 @@
         private const char QuestionMark = '?';
         private const char ExclamationMark = '!';
 
-        private const string Separators = ";()[],.{}";
+        private const string Separators = ";()[],.{}:";
 
         private static string[] operators = new string[] { "+", "-", "*", "/", "%", "=", "<", ">", "!", "==", "<=", ">=", "!=", "=>", "..", "&", "|", "^", "~", "&&", "||", "**", "<<", ">>", "<=>", "===" };
 
@@ -239,6 +239,9 @@
                 else
                     this.BackChar();
             }
+
+            if (String.IsNullOrEmpty(value))
+                return new Token(TokenType.Separator, ":");
 
             return new Token(TokenType.Symbol, value);
         }
