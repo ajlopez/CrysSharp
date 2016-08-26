@@ -646,11 +646,20 @@
         }
 
         [TestMethod]
-        [ExpectedException(typeof(SyntaxError))]
         public void RaiseIfStringIsNotClosed()
         {
             Lexer lexer = new Lexer("\"foo");
-            lexer.NextToken();
+
+            try
+            {
+                lexer.NextToken();
+                Assert.Fail();
+            }
+            catch (Exception ex)
+            {
+                Assert.IsInstanceOfType(ex, typeof(SyntaxError));
+                Assert.AreEqual("unclosed string", ex.Message);
+            }
         }
 
         [TestMethod]
