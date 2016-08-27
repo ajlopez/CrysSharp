@@ -683,12 +683,22 @@
             lexer.NextToken();
         }
 
+
         [TestMethod]
-        [ExpectedException(typeof(SyntaxError))]
         public void RaiseIfCharacterIsNotClosed()
         {
-            Lexer lexer = new Lexer("\'f");
-            lexer.NextToken();
+            Lexer lexer = new Lexer("'f");
+
+            try
+            {
+                lexer.NextToken();
+                Assert.Fail();
+            }
+            catch (Exception ex)
+            {
+                Assert.IsInstanceOfType(ex, typeof(SyntaxError));
+                Assert.AreEqual("unclosed character", ex.Message);
+            }
         }
 
         [TestMethod]
