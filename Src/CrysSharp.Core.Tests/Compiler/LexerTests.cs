@@ -609,7 +609,7 @@
         [TestMethod]
         public void GetEscapedCharacters()
         {
-            Lexer lexer = new Lexer("'\\t' '\\n' '\\r'");
+            Lexer lexer = new Lexer("'\\t' '\\n' '\\r' '\\v' '\\f' '\\\\'");
 
             var result = lexer.NextToken();
 
@@ -627,6 +627,24 @@
 
             Assert.IsNotNull(result);
             Assert.AreEqual("\r", result.Value);
+            Assert.AreEqual(TokenType.Character, result.Type);
+
+            result = lexer.NextToken();
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual("\v", result.Value);
+            Assert.AreEqual(TokenType.Character, result.Type);
+
+            result = lexer.NextToken();
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual("\f", result.Value);
+            Assert.AreEqual(TokenType.Character, result.Type);
+
+            result = lexer.NextToken();
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual("\\", result.Value);
             Assert.AreEqual(TokenType.Character, result.Type);
 
             Assert.IsNull(lexer.NextToken());

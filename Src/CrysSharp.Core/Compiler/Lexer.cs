@@ -311,6 +311,12 @@
                     value += '\r';
                 else if (ch2 == 'n')
                     value += '\n';
+                else if (ch2 == 'v')
+                    value += '\v';
+                else if (ch2 == 'f')
+                    value += '\f';
+                else if (ch2 == '\\')
+                    value += '\\';
                 else
                     value += ch2;
             }
