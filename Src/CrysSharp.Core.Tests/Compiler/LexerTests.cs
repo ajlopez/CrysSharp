@@ -651,6 +651,41 @@
         }
 
         [TestMethod]
+        public void GetEscapedCharactersWithOctal()
+        {
+            Lexer lexer = new Lexer("'\\101' '\\123' '\\12' '\\1'");
+
+            var result = lexer.NextToken();
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual("A", result.Value);
+            Assert.AreEqual(TokenType.Character, result.Type);
+
+            result = lexer.NextToken();
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual("S", result.Value);
+            Assert.AreEqual(TokenType.Character, result.Type);
+
+            result = lexer.NextToken();
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual("\n", result.Value);
+            Assert.AreEqual(TokenType.Character, result.Type);
+
+            result = lexer.NextToken();
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(1, result.Value.Length);
+            Assert.AreEqual(1, (int)result.Value[0]);
+            Assert.AreEqual(TokenType.Character, result.Type);
+
+            result = lexer.NextToken();
+
+            Assert.IsNull(lexer.NextToken());
+        }
+
+        [TestMethod]
         public void GetStringWithCommentChar()
         {
             Lexer lexer = new Lexer("\"#foo\"");
