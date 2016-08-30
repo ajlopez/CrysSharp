@@ -317,6 +317,17 @@
                     value += '\f';
                 else if (ch2 == '\\')
                     value += '\\';
+                else if (ch2 >= '0' && ch2 <= '7')
+                {
+                    value += ch2;
+                    ch2 = (char)this.NextChar();
+
+                    while (ch2 >= '0' && ch2 <= '7')
+                    {
+                        value += ch2;
+                        ch2 = (char)this.NextChar();
+                    }
+                }
                 else
                     value += ch2;
             }
