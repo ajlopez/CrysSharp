@@ -24,6 +24,7 @@
         private static string[] operators = new string[] { "+", "-", "*", "/", "%", "=", "<", ">", "!", "==", "<=", ">=", "!=", "=>", "..", "&", "|", "^", "~", "&&", "||", "**", "<<", ">>", "<=>", "===" };
 
         private ICharStream stream;
+        private Stack<char> chars = new Stack<char>();
         private Stack<Token> tokens = new Stack<Token>();
 
         public Lexer(string text)
@@ -327,6 +328,9 @@
                         value += ch2;
                         ch2 = (char)this.NextChar();
                     }
+
+                    this.chars.Push(ch2);
+                    value = ((char)Convert.ToInt16(value, 8)).ToString();
                 }
                 else
                     value += ch2;
@@ -406,6 +410,9 @@
 
         private int NextChar()
         {
+            if (this.chars.Count > 0)
+                return this.chars.Pop();
+
             return this.stream.NextChar();
         }
 
