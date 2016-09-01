@@ -542,6 +542,19 @@
         }
 
         [TestMethod]
+        public void GetOctalInteger()
+        {
+            Lexer lexer = new Lexer("0o123");
+            var result = lexer.NextToken();
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual("0o123", result.Value);
+            Assert.AreEqual(TokenType.Integer, result.Type);
+
+            Assert.IsNull(lexer.NextToken());
+        }
+
+        [TestMethod]
         public void GetRealNumber()
         {
             Lexer lexer = new Lexer("123.45");
