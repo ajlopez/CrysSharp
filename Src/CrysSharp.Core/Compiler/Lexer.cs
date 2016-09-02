@@ -356,6 +356,14 @@
             if (ich >= 0 && (char)ich == '.')
                 return this.NextReal(value);
 
+            if (value.Length == 1 && value[0] == '0' && ich >= 0 && (char)ich == 'o')
+            {
+                value += 'o';
+                for (ich = this.NextChar(); ich >= 0 && (char.IsDigit((char)ich) || (char)ich == '_'); ich = this.NextChar())
+                    if ((char)ich != '_')
+                        value += (char)ich;
+            }
+
             if (ich >= 0)
                 this.BackChar();
 
