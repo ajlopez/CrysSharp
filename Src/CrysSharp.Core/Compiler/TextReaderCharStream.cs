@@ -18,14 +18,14 @@
             this.reader = reader;
         }
 
-        public int NextChar()
+        public char? NextChar()
         {
             while (this.position >= this.length)
             {
                 this.length = this.reader.Read(this.buffer, 0, this.buffer.Length);
 
                 if (this.length == 0)
-                    return -1;
+                    return null;
 
                 this.position = 0;
             }

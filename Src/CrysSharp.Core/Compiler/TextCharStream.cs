@@ -16,10 +16,10 @@
             this.position = 0;
         }
 
-        public int NextChar()
+        public char? NextChar()
         {
             if (this.position >= this.text.Length)
-                return -1;
+                return null;
 
             return this.text[this.position++];
         }

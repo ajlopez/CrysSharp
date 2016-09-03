@@ -6,6 +6,6 @@
     {
         void BackChar();
 
-        int NextChar();
+        char? NextChar();
     }
 }

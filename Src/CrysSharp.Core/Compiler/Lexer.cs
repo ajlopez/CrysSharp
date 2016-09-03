@@ -42,12 +42,10 @@
             if (this.tokens.Count > 0)
                 return this.tokens.Pop();
 
-            int ich = this.NextFirstChar();
+            char? ch = this.NextFirstChar();
 
-            if (ich == -1)
+            if (ch == null)
                 return null;
-
-            char ch = (char)ich;
 
             if (ch == EndOfLine)
                 return new Token(TokenType.EndOfLine, "\n");
@@ -67,23 +65,23 @@
             if (ch == Global)
                 return this.NextGlobalVariableName();
 
-            if (char.IsDigit(ch))
+            if (char.IsDigit((char)ch))
                 return this.NextInteger(ch);
 
-            if (char.IsLetter(ch) || ch == '_' || ch == '$')
+            if (char.IsLetter((char)ch) || ch == '_' || ch == '$')
                 return this.NextName(ch);
 
             if (operators.Contains(ch.ToString()))
-                return NextOperator(ref ich, ch);
+                return NextOperator(ch);
 
             if (operators.Any(op => op.StartsWith(ch.ToString())))
             {
                 string value = ch.ToString();
-                ich = this.NextChar();
+                ch = this.NextChar();
 
-                if (ich >= 0)
+                if (ch != null)
                 {
-                    value += (char)ich;
+                    value += ch;
 
                     if (operators.Contains(value))
                         return new Token(TokenType.Operator, value);
@@ -92,7 +90,7 @@
                 }
             }
 
-            if (Separators.Contains(ch))
+            if (Separators.Contains((char)ch))
                 return new Token(TokenType.Separator, ch.ToString());
 
             throw new SyntaxError(string.Format("unexpected '{0}'", ch));
@@ -103,22 +101,22 @@
             this.tokens.Push(token);
         }
 
-        private Token NextOperator(ref int ich, char ch)
+        private Token NextOperator(char? ch)
         {
             string value = ch.ToString();
-            ich = this.NextChar();
+            ch = this.NextChar();
 
-            if (ich >= 0)
+            if (ch != null)
             {
-                value += (char)ich;
+                string value1 = value + ch;
 
                 if (operators.Any(op => op.StartsWith(value)))
                 {
-                    int ich2 = this.NextChar();
+                    char? ch2 = this.NextChar();
 
-                    if (ich2 >= 0)
+                    if (ch2 != null)
                     {
-                        string value2 = value + (char)ich2;
+                        string value2 = value1 + ch2;
 
                         if (operators.Contains(value2))
                             return new Token(TokenType.Operator, value2);
@@ -127,24 +125,23 @@
                     }
                 }
 
-                if (operators.Contains(value))
-                    return new Token(TokenType.Operator, value);
+                if (operators.Contains(value1))
+                    return new Token(TokenType.Operator, value1);
 
                 this.BackChar();
             }
 
-            return new Token(TokenType.Operator, ch.ToString());
+            return new Token(TokenType.Operator, value);
         }
 
-        private Token NextName(char ch)
+        private Token NextName(char? ch)
         {
             string value = ch.ToString();
-            int ich;
 
-            for (ich = this.NextChar(); ich >= 0 && ((char)ich == '_' || char.IsLetterOrDigit((char)ich)); ich = this.NextChar())
-                value += (char)ich;
+            for (ch = this.NextChar(); ch != null && (ch == '_' || char.IsLetterOrDigit((char)ch)); ch = this.NextChar())
+                value += ch;
 
-            if (ich >= 0)
+            if (ch != null)
                 this.BackChar();
 
             if (value == "nil")
@@ -159,14 +156,14 @@
         private Token NextInstanceVariableName()
         {
             string value = string.Empty;
-            int ich;
+            char? ch;
 
-            for (ich = this.NextChar(); ich >= 0 && ((char)ich == '_' || char.IsLetterOrDigit((char)ich)); ich = this.NextChar())
-                value += (char)ich;
+            for (ch = this.NextChar(); ch != null && (ch == '_' || char.IsLetterOrDigit((char)ch)); ch = this.NextChar())
+                value += ch;
 
-            if (ich >= 0)
+            if (ch != null)
             {
-                if (string.IsNullOrEmpty(value) && (char)ich == Variable)
+                if (string.IsNullOrEmpty(value) && ch == Variable)
                     return this.NextClassVariableName();
 
                 this.BackChar();
@@ -181,10 +178,10 @@
         private Token NextGlobalVariableName()
         {
             string value = string.Empty;
-            int ich;
+            char? ch;
 
-            for (ich = this.NextChar(); ich >= 0 && char.IsLetterOrDigit((char)ich); ich = this.NextChar())
-                value += (char)ich;
+            for (ch = this.NextChar(); ch != null && char.IsLetterOrDigit((char)ch); ch = this.NextChar())
+                value += ch;
 
             return new Token(TokenType.GlobalVarName, value);
         }
@@ -192,12 +189,12 @@
         private Token NextClassVariableName()
         {
             string value = string.Empty;
-            int ich;
+            char? ch;
 
-            for (ich = this.NextChar(); ich >= 0 && ((char)ich == '_' || char.IsLetterOrDigit((char)ich)); ich = this.NextChar())
-                value += (char)ich;
+            for (ch = this.NextChar(); ch != null && (ch == '_' || char.IsLetterOrDigit((char)ch)); ch = this.NextChar())
+                value += ch;
 
-            if (ich >= 0)
+            if (ch != null)
                 this.BackChar();
 
             if (string.IsNullOrEmpty(value) || char.IsDigit(value[0]))
@@ -209,29 +206,25 @@
         private Token NextSymbol()
         {
             string value = string.Empty;
-            int ich;
+            char? ch;
 
-            ich = this.NextChar();
+            ch = this.NextChar();
 
-            if (ich >= 0 && (char)ich == DoubleQuote)
+            if (ch != null && ch == DoubleQuote)
                 return new Token(TokenType.Symbol, this.NextString().Value);
 
-            for (; ich >= 0 && ((char)ich == '_' || char.IsLetterOrDigit((char)ich)); ich = this.NextChar())
+            for (; ch != null && (ch == '_' || char.IsLetterOrDigit((char)ch)); ch = this.NextChar())
             {
-                char ch = (char)ich;
-
-                if (char.IsDigit(ch) && string.IsNullOrEmpty(value))
+                if (char.IsDigit((char)ch) && string.IsNullOrEmpty(value))
                     throw new SyntaxError("unexpected integer");
 
                 value += ch;
             }
 
-            if (value == string.Empty && ich >= 0 && operators.Contains(((char)ich).ToString()))
-                value += (char)ich;
-            else if (ich >= 0)
+            if (value == string.Empty && ch != null && operators.Contains(((char)ch).ToString()))
+                value += ch;
+            else if (ch != null)
             {
-                char ch = (char)ich;
-
                 if (ch == ':' && string.IsNullOrEmpty(value))
                     return new Token(TokenType.Separator, "::");
 
@@ -250,20 +243,16 @@
         private Token NextString()
         {
             string value = string.Empty;
-            int ich;
+            char? ch;
 
-            for (ich = this.NextChar(); ich >= 0 && ((char)ich) != DoubleQuote; ich = this.NextChar())
+            for (ch = this.NextChar(); ch != null && ch != DoubleQuote; ch = this.NextChar())
             {
-                char ch = (char)ich;
-
                 if (ch == '\\')
                 {
-                    int ich2 = this.NextChar();
+                    char? ch2 = this.NextChar();
 
-                    if (ich2 > 0)
+                    if (ch2 != null)
                     {
-                        char ch2 = (char)ich2;
-
                         if (ch2 == 't')
                         {
                             value += '\t';
@@ -287,10 +276,10 @@
                     }
                 }
 
-                value += (char)ich;
+                value += ch;
             }
 
-            if (ich < 0)
+            if (ch == null)
                 throw new SyntaxError("unclosed string");
 
             return new Token(TokenType.String, value);
@@ -344,27 +333,26 @@
             return new Token(TokenType.Character, value);
         }
 
-        private Token NextInteger(char ch)
+        private Token NextInteger(char? ch)
         {
             string value = ch.ToString();
-            int ich;
 
-            for (ich = this.NextChar(); ich >= 0 && (char.IsDigit((char)ich) || (char)ich == '_'); ich = this.NextChar())
-                if ((char)ich != '_')
-                    value += (char)ich;
+            for (ch = this.NextChar(); ch != null && (char.IsDigit((char)ch) || (char)ch == '_'); ch = this.NextChar())
+                if (ch != '_')
+                    value += ch;
 
-            if (ich >= 0 && (char)ich == '.')
+            if (ch != null && ch == '.')
                 return this.NextReal(value);
 
-            if (value.Length == 1 && value[0] == '0' && ich >= 0 && (char)ich == 'o')
+            if (value.Length == 1 && value[0] == '0' && ch != null && ch == 'o')
             {
                 value += 'o';
-                for (ich = this.NextChar(); ich >= 0 && (char.IsDigit((char)ich) || (char)ich == '_'); ich = this.NextChar())
-                    if ((char)ich != '_')
-                        value += (char)ich;
+                for (ch = this.NextChar(); ch != null && (char.IsDigit((char)ch) || ch == '_'); ch = this.NextChar())
+                    if (ch != '_')
+                        value += ch;
             }
 
-            if (ich >= 0)
+            if (ch != null)
                 this.BackChar();
 
             return new Token(TokenType.Integer, value);
@@ -373,12 +361,12 @@
         private Token NextReal(string ivalue)
         {
             string value = ivalue + ".";
-            int ich;
+            char? ch;
 
-            for (ich = this.NextChar(); ich >= 0 && char.IsDigit((char)ich); ich = this.NextChar())
-                value += (char)ich;
+            for (ch = this.NextChar(); ch != null && char.IsDigit((char)ch); ch = this.NextChar())
+                value += ch;
 
-            if (ich >= 0)
+            if (ch != null)
                 this.BackChar();
 
             if (value.EndsWith("."))
@@ -390,22 +378,22 @@
             return new Token(TokenType.Real, value);
         }
 
-        private int NextFirstChar()
+        private char? NextFirstChar()
         {
-            int ich = this.NextChar();
+            char? ch = this.NextChar();
 
             while (true)
             {
-                while (ich > 0 && (char)ich != '\n' && char.IsWhiteSpace((char)ich))
-                    ich = this.NextChar();
+                while (ch != null && ch != '\n' && char.IsWhiteSpace((char)ch))
+                    ch = this.NextChar();
 
-                if (ich > 0 && (char)ich == StartComment)
+                if (ch != null && ch == StartComment)
                 {
-                    for (ich = this.stream.NextChar(); ich >= 0 && (char)ich != '\n';)
-                        ich = this.stream.NextChar();
+                    for (ch = this.stream.NextChar(); ch != null && ch != '\n';)
+                        ch = this.stream.NextChar();
 
-                    if (ich < 0)
-                        return -1;
+                    if (ch == null)
+                        return null;
 
                     continue;
                 }
@@ -413,10 +401,10 @@
                 break;
             }
 
-            return ich;
+            return ch;
         }
 
-        private int NextChar()
+        private char? NextChar()
         {
             if (this.chars.Count > 0)
                 return this.chars.Pop();
