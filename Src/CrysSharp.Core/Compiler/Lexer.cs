@@ -77,11 +77,11 @@
             if (operators.Any(op => op.StartsWith(ch.ToString())))
             {
                 string value = ch.ToString();
-                ch = this.NextChar();
+                char? ch2 = this.NextChar();
 
-                if (ch != null)
+                if (ch2 != null)
                 {
-                    value += ch;
+                    value += ch2;
 
                     if (operators.Contains(value))
                         return new Token(TokenType.Operator, value);
@@ -289,11 +289,17 @@
         {
             string value = string.Empty;
 
-            char ch = (char)this.NextChar();
+            char? ch = this.NextChar();
+
+            if (ch == null)
+                throw new SyntaxError("unclosed character");
 
             if (ch == '\\')
             {
-                char ch2 = (char)this.NextChar();
+                char? ch2 = this.NextChar();
+
+                if (ch2 == null)
+                    throw new SyntaxError("unclosed character");
 
                 if (ch2 == 't')
                     value += '\t';
@@ -310,15 +316,17 @@
                 else if (ch2 >= '0' && ch2 <= '7')
                 {
                     value += ch2;
-                    ch2 = (char)this.NextChar();
+                    ch2 = this.NextChar();
 
-                    while (ch2 >= '0' && ch2 <= '7')
+                    while (ch2 != null && ch2 >= '0' && ch2 <= '7')
                     {
                         value += ch2;
                         ch2 = (char)this.NextChar();
                     }
 
-                    this.chars.Push(ch2);
+                    if (ch2 != null)
+                        this.BackChar();
+
                     value = ((char)Convert.ToInt16(value, 8)).ToString();
                 }
                 else
@@ -327,7 +335,9 @@
             else
                 value += ch;
 
-            if ((char)this.NextChar() != Quote)
+            ch = this.NextChar();
+
+            if (ch == null || ch != Quote)
                 throw new SyntaxError("unclosed character");
 
             return new Token(TokenType.Character, value);
