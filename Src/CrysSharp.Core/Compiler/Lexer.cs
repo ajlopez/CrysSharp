@@ -357,10 +357,18 @@
             if (value.Length == 1 && value[0] == '0' && ch != null && ch == 'o')
             {
                 value += 'o';
-                for (ch = this.NextChar(); ch != null && (char.IsDigit((char)ch) || ch == '_'); ch = this.NextChar())
+                for (ch = this.NextChar(); ch != null && ((ch >= '0' && ch <= '7') || ch == '_'); ch = this.NextChar())
                     if (ch != '_')
                         value += ch;
             }
+            else if (value.Length == 1 && value[0] == '0' && ch != null && ch == 'b')
+            {
+                value += 'b';
+                for (ch = this.NextChar(); ch != null && ((ch >= '0' && ch <= '1') || ch == '_'); ch = this.NextChar())
+                    if (ch != '_')
+                        value += ch;
+            }
+
 
             if (ch != null)
                 this.BackChar();
