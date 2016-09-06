@@ -581,6 +581,19 @@
         }
 
         [TestMethod]
+        public void GetHexadecimalIntegerWithUpperCaseLetters()
+        {
+            Lexer lexer = new Lexer("0x0123456789ABCDEF");
+            var result = lexer.NextToken();
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual("0x0123456789ABCDEF", result.Value);
+            Assert.AreEqual(TokenType.Integer, result.Type);
+
+            Assert.IsNull(lexer.NextToken());
+        }
+
+        [TestMethod]
         public void GetRealNumber()
         {
             Lexer lexer = new Lexer("123.45");

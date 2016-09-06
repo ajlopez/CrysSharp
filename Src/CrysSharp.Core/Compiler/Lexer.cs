@@ -371,7 +371,7 @@
             else if (value.Length == 1 && value[0] == '0' && ch != null && ch == 'x')
             {
                 value += 'x';
-                for (ch = this.NextChar(); ch != null && ((ch >= '0' && ch <= '9') || (ch >= 'a' && ch <= 'f') || ch == '_'); ch = this.NextChar())
+                for (ch = this.NextChar(); ch != null && ((ch >= '0' && ch <= '9') || (ch >= 'a' && ch <= 'f') || (ch >= 'A' && ch <= 'F') || ch == '_'); ch = this.NextChar())
                     if (ch != '_')
                         value += ch;
             }
