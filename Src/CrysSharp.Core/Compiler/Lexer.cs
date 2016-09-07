@@ -74,22 +74,6 @@
             if (operators.Contains(ch.ToString()))
                 return NextOperator(ch);
 
-            if (operators.Any(op => op.StartsWith(ch.ToString())))
-            {
-                string value = ch.ToString();
-                char? ch2 = this.NextChar();
-
-                if (ch2 != null)
-                {
-                    value += ch2;
-
-                    if (operators.Contains(value))
-                        return new Token(TokenType.Operator, value);
-
-                    this.BackChar();
-                }
-            }
-
             if (Separators.Contains((char)ch))
                 return new Token(TokenType.Separator, ch.ToString());
 
