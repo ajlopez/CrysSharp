@@ -788,7 +788,6 @@
             lexer.NextToken();
         }
 
-
         [TestMethod]
         public void RaiseIfCharacterIsNotClosed()
         {

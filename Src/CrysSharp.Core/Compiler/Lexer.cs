@@ -71,8 +71,13 @@
             if (char.IsLetter((char)ch) || ch == '_' || ch == '$')
                 return this.NextName(ch);
 
-            if (operators.Contains(ch.ToString()))
-                return NextOperator(ch);
+            if (operators.Any(op => op.StartsWith(ch.ToString())))
+            {
+                var token = NextOperator(ch);
+
+                if (token != null)
+                    return token;
+            }
 
             if (Separators.Contains((char)ch))
                 return new Token(TokenType.Separator, ch.ToString());
@@ -88,13 +93,14 @@
         private Token NextOperator(char? ch)
         {
             string value = ch.ToString();
+            
             ch = this.NextChar();
 
             if (ch != null)
             {
                 string value1 = value + ch;
 
-                if (operators.Any(op => op.StartsWith(value)))
+                if (operators.Any(op => op.StartsWith(value1)))
                 {
                     char? ch2 = this.NextChar();
 
@@ -115,7 +121,10 @@
                 this.BackChar();
             }
 
-            return new Token(TokenType.Operator, value);
+            if (operators.Contains(value))
+                return new Token(TokenType.Operator, value);
+
+            return null;
         }
 
         private Token NextName(char? ch)
