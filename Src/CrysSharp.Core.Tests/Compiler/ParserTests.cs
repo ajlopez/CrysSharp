@@ -1144,5 +1144,27 @@
             Assert.IsInstanceOfType(arrexpr.Expressions[2], typeof(ConstantExpression));
             Assert.AreEqual(3, ((ConstantExpression)arrexpr.Expressions[2]).Value);
         }
+
+        [TestMethod]
+        public void ParseNamedTuple()
+        {
+            Parser parser = new Parser("{ name: \"Crystal\", year: 2011 }");
+
+            var result = parser.ParseExpression();
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(NamedTupleExpression));
+
+            var ntupleexpr = (NamedTupleExpression)result;
+
+            Assert.IsNotNull(ntupleexpr.Expressions);
+            Assert.AreEqual(2, ntupleexpr.Expressions.Count);
+
+            Assert.IsInstanceOfType(ntupleexpr.Expressions[0], typeof(ConstantExpression));
+            Assert.AreEqual("Crystal", ((ConstantExpression)ntupleexpr.Expressions[0]).Value);
+
+            Assert.IsInstanceOfType(ntupleexpr.Expressions[1], typeof(ConstantExpression));
+            Assert.AreEqual(2011, ((ConstantExpression)ntupleexpr.Expressions[1]).Value);
+        }
     }
 }
