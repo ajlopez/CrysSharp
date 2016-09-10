@@ -1157,6 +1157,9 @@
 
             var ntupleexpr = (NamedTupleExpression)result;
 
+            Assert.IsNotNull(ntupleexpr.Names);
+            Assert.AreEqual(2, ntupleexpr.Names.Count);
+
             Assert.IsNotNull(ntupleexpr.Expressions);
             Assert.AreEqual(2, ntupleexpr.Expressions.Count);
 

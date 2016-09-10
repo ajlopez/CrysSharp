@@ -9,6 +9,7 @@
     {
         Nil,
         Name,
+        Key,
         Integer,
         Real,
         String,

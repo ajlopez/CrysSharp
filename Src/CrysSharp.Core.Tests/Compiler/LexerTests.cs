@@ -23,20 +23,14 @@
         }
 
         [TestMethod]
-        public void GetNameAndColon()
+        public void GetKey()
         {
             Lexer lexer = new Lexer("name:");
             var result = lexer.NextToken();
 
             Assert.IsNotNull(result);
             Assert.AreEqual("name", result.Value);
-            Assert.AreEqual(TokenType.Name, result.Type);
-
-            result = lexer.NextToken();
-
-            Assert.IsNotNull(result);
-            Assert.AreEqual(":", result.Value);
-            Assert.AreEqual(TokenType.Separator, result.Type);
+            Assert.AreEqual(TokenType.Key, result.Type);
 
             Assert.IsNull(lexer.NextToken());
         }
