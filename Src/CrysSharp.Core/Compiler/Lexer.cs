@@ -135,7 +135,10 @@
                 value += ch;
 
             if (ch != null)
-                this.BackChar();
+                if (ch == ':')
+                    return new Token(TokenType.Key, value);
+                else
+                    this.BackChar();
 
             if (value == "nil")
                 return new Token(TokenType.Nil, value);
