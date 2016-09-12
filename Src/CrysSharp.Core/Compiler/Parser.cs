@@ -118,15 +118,22 @@
             {
                 List<IExpression> exprs = new List<IExpression>();
 
-                while (!this.TryParseToken(TokenType.Separator, "}"))
+                Token token2 = this.lexer.NextToken();
+
+                if (token2 != null && token2.Type != TokenType.Key)
                 {
-                    if (exprs.Count > 0)
-                        this.ParseToken(TokenType.Separator, ",");
+                    this.lexer.PushToken(token2);
 
-                    exprs.Add(this.ParseExpression());
+                    while (!this.TryParseToken(TokenType.Separator, "}"))
+                    {
+                        if (exprs.Count > 0)
+                            this.ParseToken(TokenType.Separator, ",");
+
+                        exprs.Add(this.ParseExpression());
+                    }
+
+                    return new TupleExpression(exprs);
                 }
-
-                return new TupleExpression(exprs);
             }
 
             if (token.Type == TokenType.Separator && token.Value == "[")
