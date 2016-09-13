@@ -134,6 +134,23 @@
 
                     return new TupleExpression(exprs);
                 }
+                else
+                {
+                    List<string> keys = new List<string>();
+                    List<IExpression> expressions = new List<IExpression>();
+
+                    keys.Add(token2.Value);
+                    expressions.Add(this.ParseExpression());
+
+                    while (!this.TryParseToken(TokenType.Separator, "}"))
+                    {
+                        this.ParseToken(TokenType.Separator, ",");
+                        keys.Add(this.ParseKey());
+                        expressions.Add(this.ParseExpression());
+                    }
+
+                    return new NamedTupleExpression(keys, exprs);
+                }
             }
 
             if (token.Type == TokenType.Separator && token.Value == "[")
@@ -187,6 +204,16 @@
 
             if (token == null || token.Type != type || token.Value != value)
                 throw new ParserException(string.Format("Expected '{0}'", value));
+        }
+
+        private string ParseKey()
+        {
+            Token token = this.lexer.NextToken();
+
+            if (token == null || token.Type != TokenType.Key)
+                throw new ParserException("Expected key");
+
+            return token.Value;
         }
 
         private bool TryParseToken(TokenType type, string value)
