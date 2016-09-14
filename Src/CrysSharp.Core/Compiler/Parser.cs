@@ -149,7 +149,7 @@
                         expressions.Add(this.ParseExpression());
                     }
 
-                    return new NamedTupleExpression(keys, exprs);
+                    return new NamedTupleExpression(keys, expressions);
                 }
             }
 
