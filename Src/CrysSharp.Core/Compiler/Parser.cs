@@ -115,58 +115,10 @@
             }
 
             if (token.Type == TokenType.Separator && token.Value == "{")
-            {
-                List<IExpression> exprs = new List<IExpression>();
-
-                Token token2 = this.lexer.NextToken();
-
-                if (token2 != null && token2.Type != TokenType.Key)
-                {
-                    this.lexer.PushToken(token2);
-
-                    while (!this.TryParseToken(TokenType.Separator, "}"))
-                    {
-                        if (exprs.Count > 0)
-                            this.ParseToken(TokenType.Separator, ",");
-
-                        exprs.Add(this.ParseExpression());
-                    }
-
-                    return new TupleExpression(exprs);
-                }
-                else
-                {
-                    List<string> keys = new List<string>();
-                    List<IExpression> expressions = new List<IExpression>();
-
-                    keys.Add(token2.Value);
-                    expressions.Add(this.ParseExpression());
-
-                    while (!this.TryParseToken(TokenType.Separator, "}"))
-                    {
-                        this.ParseToken(TokenType.Separator, ",");
-                        keys.Add(this.ParseKey());
-                        expressions.Add(this.ParseExpression());
-                    }
-
-                    return new NamedTupleExpression(keys, expressions);
-                }
-            }
+                return ParseTupleExpression();
 
             if (token.Type == TokenType.Separator && token.Value == "[")
-            {
-                List<IExpression> exprs = new List<IExpression>();
-
-                while (!this.TryParseToken(TokenType.Separator, "]"))
-                {
-                    if (exprs.Count > 0)
-                        this.ParseToken(TokenType.Separator, ",");
-
-                    exprs.Add(this.ParseExpression());
-                }
-
-                return new ArrayExpression(exprs);
-            }
+                return ParseArrayExpression();
 
             if (token.Type == TokenType.Nil)
                 return new ConstantExpression(null);
@@ -196,6 +148,60 @@
                 return new InstanceVariableNameExpression(token.Value);
 
             return new VariableNameExpression(token.Value);
+        }
+
+        private IExpression ParseTupleExpression()
+        {
+            List<IExpression> exprs = new List<IExpression>();
+
+            Token token2 = this.lexer.NextToken();
+
+            if (token2 != null && token2.Type != TokenType.Key)
+            {
+                this.lexer.PushToken(token2);
+
+                while (!this.TryParseToken(TokenType.Separator, "}"))
+                {
+                    if (exprs.Count > 0)
+                        this.ParseToken(TokenType.Separator, ",");
+
+                    exprs.Add(this.ParseExpression());
+                }
+
+                return new TupleExpression(exprs);
+            }
+            else
+            {
+                List<string> keys = new List<string>();
+                List<IExpression> expressions = new List<IExpression>();
+
+                keys.Add(token2.Value);
+                expressions.Add(this.ParseExpression());
+
+                while (!this.TryParseToken(TokenType.Separator, "}"))
+                {
+                    this.ParseToken(TokenType.Separator, ",");
+                    keys.Add(this.ParseKey());
+                    expressions.Add(this.ParseExpression());
+                }
+
+                return new NamedTupleExpression(keys, expressions);
+            }
+        }
+
+        private IExpression ParseArrayExpression()
+        {
+            List<IExpression> exprs = new List<IExpression>();
+
+            while (!this.TryParseToken(TokenType.Separator, "]"))
+            {
+                if (exprs.Count > 0)
+                    this.ParseToken(TokenType.Separator, ",");
+
+                exprs.Add(this.ParseExpression());
+            }
+
+            return new ArrayExpression(exprs);
         }
 
         private void ParseToken(TokenType type, string value)
