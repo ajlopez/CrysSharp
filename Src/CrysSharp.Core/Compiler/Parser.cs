@@ -171,22 +171,25 @@
                 return new TupleExpression(exprs);
             }
             else
+                return ParseNamedTupleExpression(token2);
+        }
+
+        private IExpression ParseNamedTupleExpression(Token token2)
+        {
+            List<string> keys = new List<string>();
+            List<IExpression> expressions = new List<IExpression>();
+
+            keys.Add(token2.Value);
+            expressions.Add(this.ParseExpression());
+
+            while (!this.TryParseToken(TokenType.Separator, "}"))
             {
-                List<string> keys = new List<string>();
-                List<IExpression> expressions = new List<IExpression>();
-
-                keys.Add(token2.Value);
+                this.ParseToken(TokenType.Separator, ",");
+                keys.Add(this.ParseKey());
                 expressions.Add(this.ParseExpression());
-
-                while (!this.TryParseToken(TokenType.Separator, "}"))
-                {
-                    this.ParseToken(TokenType.Separator, ",");
-                    keys.Add(this.ParseKey());
-                    expressions.Add(this.ParseExpression());
-                }
-
-                return new NamedTupleExpression(keys, expressions);
             }
+
+            return new NamedTupleExpression(keys, expressions);
         }
 
         private IExpression ParseArrayExpression()
