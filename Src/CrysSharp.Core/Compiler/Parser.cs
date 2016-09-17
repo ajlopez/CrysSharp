@@ -156,30 +156,28 @@
 
             Token token2 = this.lexer.NextToken();
 
-            if (token2 != null && token2.Type != TokenType.Key)
-            {
-                this.lexer.PushToken(token2);
-
-                while (!this.TryParseToken(TokenType.Separator, "}"))
-                {
-                    if (exprs.Count > 0)
-                        this.ParseToken(TokenType.Separator, ",");
-
-                    exprs.Add(this.ParseExpression());
-                }
-
-                return new TupleExpression(exprs);
-            }
-            else
+            if (token2 != null && token2.Type == TokenType.Key)
                 return ParseNamedTupleExpression(token2);
+
+            this.lexer.PushToken(token2);
+
+            while (!this.TryParseToken(TokenType.Separator, "}"))
+            {
+                if (exprs.Count > 0)
+                    this.ParseToken(TokenType.Separator, ",");
+
+                exprs.Add(this.ParseExpression());
+            }
+
+            return new TupleExpression(exprs);
         }
 
-        private IExpression ParseNamedTupleExpression(Token token2)
+        private IExpression ParseNamedTupleExpression(Token token)
         {
             List<string> keys = new List<string>();
             List<IExpression> expressions = new List<IExpression>();
 
-            keys.Add(token2.Value);
+            keys.Add(token.Value);
             expressions.Add(this.ParseExpression());
 
             while (!this.TryParseToken(TokenType.Separator, "}"))
