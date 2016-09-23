@@ -28,7 +28,18 @@
 
         public IExpression ParseExpression()
         {
-            return this.ParseBinaryExpression(0);
+            var expr = this.ParseBinaryExpression(0);
+
+            if (expr == null)
+                return expr;
+
+            if (!(expr is VariableNameExpression))
+                return expr;
+
+            if (!this.TryParseToken(TokenType.Operator, "="))
+                return expr;
+
+            return new VariableAssignmentExpression(((VariableNameExpression)expr).Name, this.ParseExpression());
         }
 
         private IExpression ParseBinaryExpression(int level)
