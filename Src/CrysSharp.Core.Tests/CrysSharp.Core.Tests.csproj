@@ -48,8 +48,9 @@
     <Compile Include="Compiler\LexerTests.cs" />
     <Compile Include="Compiler\ParserTests.cs" />
     <Compile Include="Expressions\ConstantExpressionTests.cs" />
+    <Compile Include="Expressions\InstanceVariableAssignmentExpressionTests.cs" />
     <Compile Include="Expressions\VariableAssignmentExpressionTests.cs" />
-    <Compile Include="Expressions\VariableNameExpressionTests.cs" />
+    <Compile Include="Expressions\VariableExpressionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

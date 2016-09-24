@@ -72,7 +72,7 @@
         }
 
         [TestMethod]
-        public void ParseInstanceVariableName()
+        public void ParseInstanceVariable()
         {
             Parser parser = new Parser("@foo");
 
@@ -86,7 +86,7 @@
         }
 
         [TestMethod]
-        public void ParseClassVariableName()
+        public void ParseClassVariable()
         {
             Parser parser = new Parser("@@foo");
 

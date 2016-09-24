@@ -54,6 +54,7 @@
     <Compile Include="Expressions\BinaryAndExpression.cs" />
     <Compile Include="Expressions\BinaryOrExpression.cs" />
     <Compile Include="Expressions\ArrayExpression.cs" />
+    <Compile Include="Expressions\InstanceVariableAssignmentExpression.cs" />
     <Compile Include="Expressions\VariableAssignmentExpression.cs" />
     <Compile Include="Expressions\NamedTupleExpression.cs" />
     <Compile Include="Expressions\TupleExpression.cs" />
@@ -62,8 +63,8 @@
     <Compile Include="Expressions\BinaryXorExpression.cs" />
     <Compile Include="Expressions\ComparisonExpression.cs" />
     <Compile Include="Expressions\CaseEqualityExpression.cs" />
-    <Compile Include="Expressions\ClassVariableNameExpression.cs" />
-    <Compile Include="Expressions\InstanceVariableNameExpression.cs" />
+    <Compile Include="Expressions\ClassVariableExpression.cs" />
+    <Compile Include="Expressions\InstanceVariableExpression.cs" />
     <Compile Include="Expressions\GlobalVariableNameExpression.cs" />
     <Compile Include="Expressions\RangeExpression.cs" />
     <Compile Include="Expressions\LessEqualsExpression.cs" />
@@ -82,7 +83,7 @@
     <Compile Include="Expressions\MultiplyExpression.cs" />
     <Compile Include="Expressions\SubtractExpression.cs" />
     <Compile Include="Expressions\IExpression.cs" />
-    <Compile Include="Expressions\VariableNameExpression.cs" />
+    <Compile Include="Expressions\VariableExpression.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
