@@ -5,11 +5,11 @@
     using System.Linq;
     using System.Text;
 
-    public class ClassVariableNameExpression : IExpression
+    public class ClassVariableExpression : IExpression
     {
         private string name;
 
-        public ClassVariableNameExpression(string name)
+        public ClassVariableExpression(string name)
         {
             this.name = name;
         }

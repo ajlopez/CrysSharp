@@ -93,8 +93,8 @@
             var result = parser.ParseExpression();
 
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(ClassVariableNameExpression));
-            Assert.AreEqual("foo", ((ClassVariableNameExpression)result).Name);
+            Assert.IsInstanceOfType(result, typeof(ClassVariableExpression));
+            Assert.AreEqual("foo", ((ClassVariableExpression)result).Name);
 
             Assert.IsNull(parser.ParseExpression());
         }
