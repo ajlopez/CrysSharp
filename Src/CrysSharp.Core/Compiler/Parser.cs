@@ -33,13 +33,13 @@
             if (expr == null)
                 return expr;
 
-            if (!(expr is VariableNameExpression))
+            if (!(expr is VariableExpression))
                 return expr;
 
             if (!this.TryParseToken(TokenType.Operator, "="))
                 return expr;
 
-            return new VariableAssignmentExpression(((VariableNameExpression)expr).Name, this.ParseExpression());
+            return new VariableAssignmentExpression(((VariableExpression)expr).Name, this.ParseExpression());
         }
 
         private IExpression ParseBinaryExpression(int level)
@@ -158,7 +158,7 @@
             if (token.Type == TokenType.InstanceVarName)
                 return new InstanceVariableNameExpression(token.Value);
 
-            return new VariableNameExpression(token.Value);
+            return new VariableExpression(token.Value);
         }
 
         private IExpression ParseTupleExpression()
