@@ -156,7 +156,7 @@
             if (token.Type == TokenType.ClassVarName)
                 return new ClassVariableNameExpression(token.Value);
             if (token.Type == TokenType.InstanceVarName)
-                return new InstanceVariableNameExpression(token.Value);
+                return new InstanceVariableExpression(token.Value);
 
             return new VariableExpression(token.Value);
         }

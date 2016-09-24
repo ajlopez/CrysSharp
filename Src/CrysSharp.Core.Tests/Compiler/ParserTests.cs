@@ -79,8 +79,8 @@
             var result = parser.ParseExpression();
 
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(InstanceVariableNameExpression));
-            Assert.AreEqual("foo", ((InstanceVariableNameExpression)result).Name);
+            Assert.IsInstanceOfType(result, typeof(InstanceVariableExpression));
+            Assert.AreEqual("foo", ((InstanceVariableExpression)result).Name);
 
             Assert.IsNull(parser.ParseExpression());
         }
