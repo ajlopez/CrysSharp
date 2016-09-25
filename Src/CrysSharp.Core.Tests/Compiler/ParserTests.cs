@@ -54,6 +54,30 @@
 
             var expr = ((VariableAssignmentExpression)result).Expression;
 
+            Assert.IsNotNull(expr);
+            Assert.IsInstanceOfType(expr, typeof(ConstantExpression));
+            Assert.AreEqual(42, ((ConstantExpression)expr).Value);
+
+            Assert.IsNull(parser.ParseExpression());
+        }
+
+        [TestMethod]
+        public void ParseInstanceVariableAssignment()
+        {
+            Parser parser = new Parser("@foo = 42");
+
+            var result = parser.ParseExpression();
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(InstanceVariableAssignmentExpression));
+            Assert.AreEqual("foo", ((InstanceVariableAssignmentExpression)result).Name);
+
+            var expr = ((InstanceVariableAssignmentExpression)result).Expression;
+
+            Assert.IsNotNull(expr);
+            Assert.IsInstanceOfType(expr, typeof(ConstantExpression));
+            Assert.AreEqual(42, ((ConstantExpression)expr).Value);
+
             Assert.IsNull(parser.ParseExpression());
         }
 
