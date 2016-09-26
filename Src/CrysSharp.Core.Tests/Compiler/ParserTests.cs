@@ -82,6 +82,26 @@
         }
 
         [TestMethod]
+        public void ParseClassVariableAssignment()
+        {
+            Parser parser = new Parser("@@foo = 42");
+
+            var result = parser.ParseExpression();
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(ClassVariableAssignmentExpression));
+            Assert.AreEqual("foo", ((ClassVariableAssignmentExpression)result).Name);
+
+            var expr = ((ClassVariableAssignmentExpression)result).Expression;
+
+            Assert.IsNotNull(expr);
+            Assert.IsInstanceOfType(expr, typeof(ConstantExpression));
+            Assert.AreEqual(42, ((ConstantExpression)expr).Value);
+
+            Assert.IsNull(parser.ParseExpression());
+        }
+        
+        [TestMethod]
         public void ParseGlobalName()
         {
             Parser parser = new Parser("$foo");

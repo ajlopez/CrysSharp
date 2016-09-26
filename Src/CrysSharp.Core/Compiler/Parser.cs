@@ -41,6 +41,10 @@
                 if (this.TryParseToken(TokenType.Operator, "="))
                     return new InstanceVariableAssignmentExpression(((InstanceVariableExpression)expr).Name, this.ParseExpression());
 
+            if (expr is ClassVariableExpression)
+                if (this.TryParseToken(TokenType.Operator, "="))
+                    return new ClassVariableAssignmentExpression(((ClassVariableExpression)expr).Name, this.ParseExpression());
+
             return expr;
         }
 
