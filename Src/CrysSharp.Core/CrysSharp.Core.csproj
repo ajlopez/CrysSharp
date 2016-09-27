@@ -55,6 +55,7 @@
     <Compile Include="Expressions\BinaryOrExpression.cs" />
     <Compile Include="Expressions\ArrayExpression.cs" />
     <Compile Include="Expressions\ClassVariableAssignmentExpression.cs" />
+    <Compile Include="Expressions\DotExpression.cs" />
     <Compile Include="Expressions\InstanceVariableAssignmentExpression.cs" />
     <Compile Include="Expressions\VariableAssignmentExpression.cs" />
     <Compile Include="Expressions\NamedTupleExpression.cs" />
