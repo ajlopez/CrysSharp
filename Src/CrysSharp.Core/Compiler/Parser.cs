@@ -114,6 +114,16 @@
 
         private IExpression ParseTerm()
         {
+            var expr = this.ParseSimpleTerm();
+
+            if (this.TryParseToken(TokenType.Separator, "."))
+                return new DotExpression(expr, this.ParseName());
+
+            return expr;
+        }
+
+        private IExpression ParseSimpleTerm()
+        {
             var token = this.lexer.NextToken();
 
             if (token == null)
@@ -228,6 +238,16 @@
 
             if (token == null || token.Type != type || token.Value != value)
                 throw new ParserException(string.Format("Expected '{0}'", value));
+        }
+
+        private string ParseName()
+        {
+            Token token = this.lexer.NextToken();
+
+            if (token == null || token.Type != TokenType.Name)
+                throw new ParserException("Expected name");
+
+            return token.Value;
         }
 
         private string ParseKey()

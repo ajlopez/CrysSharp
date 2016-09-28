@@ -1229,5 +1229,27 @@
             Assert.IsInstanceOfType(ntupleexpr.Expressions[1], typeof(ConstantExpression));
             Assert.AreEqual(2011, ((ConstantExpression)ntupleexpr.Expressions[1]).Value);
         }
+
+        [TestMethod]
+        public void ParseDotExpression()
+        {
+            Parser parser = new Parser("foo.bar");
+
+            var result = parser.ParseExpression();
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(DotExpression));
+
+            var dotexpr = (DotExpression)result;
+
+            Assert.IsNotNull(dotexpr.Expression);
+            Assert.IsInstanceOfType(dotexpr.Expression, typeof(VariableExpression));
+
+            var vexpr = (VariableExpression)dotexpr.Expression;
+
+            Assert.AreEqual("foo", vexpr.Name);
+
+            Assert.AreEqual("bar", dotexpr.Name);
+        }
     }
 }
