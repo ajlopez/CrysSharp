@@ -1083,6 +1083,27 @@
         }
 
         [TestMethod]
+        public void ParseUnaryPlusInteger()
+        {
+            Parser parser = new Parser("+3");
+
+            var result = parser.ParseExpression();
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(UnaryPlusExpression));
+
+            var plusexpr = (UnaryPlusExpression)result;
+
+            var expr = plusexpr.Expression;
+
+            Assert.IsNotNull(expr);
+            Assert.IsInstanceOfType(expr, typeof(ConstantExpression));
+            Assert.AreEqual(3, ((ConstantExpression)expr).Value);
+
+            Assert.IsNull(parser.ParseExpression());
+        }
+
+        [TestMethod]
         public void ParseLogicalNotInteger()
         {
             Parser parser = new Parser("!false");
