@@ -133,6 +133,8 @@
                 return new UnaryNotExpression(this.ParseTerm());
             if (token.Type == TokenType.Operator && token.Value == "+")
                 return new UnaryPlusExpression(this.ParseTerm());
+            if (token.Type == TokenType.Operator && token.Value == "-")
+                return new UnaryMinusExpression(this.ParseTerm());
             if (token.Type == TokenType.Operator && token.Value == "!")
                 return new LogicalNotExpression(this.ParseTerm());
 

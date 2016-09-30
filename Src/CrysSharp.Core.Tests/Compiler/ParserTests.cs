@@ -1083,6 +1083,27 @@
         }
 
         [TestMethod]
+        public void ParseUnaryMinusInteger()
+        {
+            Parser parser = new Parser("-3");
+
+            var result = parser.ParseExpression();
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(UnaryMinusExpression));
+
+            var minusexpr = (UnaryMinusExpression)result;
+
+            var expr = minusexpr.Expression;
+
+            Assert.IsNotNull(expr);
+            Assert.IsInstanceOfType(expr, typeof(ConstantExpression));
+            Assert.AreEqual(3, ((ConstantExpression)expr).Value);
+
+            Assert.IsNull(parser.ParseExpression());
+        }
+
+        [TestMethod]
         public void ParseUnaryPlusInteger()
         {
             Parser parser = new Parser("+3");
