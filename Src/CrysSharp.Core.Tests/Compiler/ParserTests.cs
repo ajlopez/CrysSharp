@@ -1293,5 +1293,32 @@
 
             Assert.AreEqual("bar", dotexpr.Name);
         }
+
+        [TestMethod]
+        public void ParseDotDotExpression()
+        {
+            Parser parser = new Parser("foo.bar.zoo");
+
+            var result = parser.ParseExpression();
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(DotExpression));
+
+            var dotexpr = (DotExpression)result;
+
+            Assert.IsNotNull(dotexpr.Expression);
+            Assert.IsInstanceOfType(dotexpr.Expression, typeof(DotExpression));
+
+            var dexpr = (DotExpression)dotexpr.Expression;
+
+            Assert.IsNotNull(dexpr.Expression);
+            Assert.IsInstanceOfType(dexpr.Expression, typeof(VariableExpression));
+
+            var vexpr = (VariableExpression)dexpr.Expression;
+
+            Assert.AreEqual("foo", vexpr.Name);
+            Assert.AreEqual("bar", dexpr.Name);
+            Assert.AreEqual("zoo", dotexpr.Name);
+        }
     }
 }
