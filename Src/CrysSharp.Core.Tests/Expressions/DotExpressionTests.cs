@@ -10,12 +10,13 @@
         [TestMethod]
         public void CreateWithVariableAndName()
         {
-            DotExpression expr = new DotExpression(new VariableExpression("bar"), "foo");
+            DotExpression expr = new DotExpression(new VariableExpression("bar"), "foo", null);
 
             Assert.IsNotNull(expr.Expression);
             Assert.IsInstanceOfType(expr.Expression, typeof(VariableExpression));
             Assert.AreEqual("bar", ((VariableExpression)expr.Expression).Name);
             Assert.AreEqual("foo", expr.Name);
+            Assert.IsNull(expr.Arguments);
         }
     }
 }

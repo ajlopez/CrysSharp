@@ -117,7 +117,7 @@
             var expr = this.ParseSimpleTerm();
 
             while (this.TryParseToken(TokenType.Separator, "."))
-                expr = new DotExpression(expr, this.ParseName());
+                expr = new DotExpression(expr, this.ParseName(), null);
 
             return expr;
         }
