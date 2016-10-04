@@ -1292,6 +1292,38 @@
             Assert.AreEqual("foo", vexpr.Name);
 
             Assert.AreEqual("bar", dotexpr.Name);
+
+            Assert.IsNull(parser.ParseExpression());
+        }
+
+        [TestMethod]
+        public void ParseDotExpressionWithArgument()
+        {
+            Parser parser = new Parser("foo.bar(42)");
+
+            var result = parser.ParseExpression();
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(DotExpression));
+
+            var dotexpr = (DotExpression)result;
+
+            Assert.IsNotNull(dotexpr.Expression);
+            Assert.IsInstanceOfType(dotexpr.Expression, typeof(VariableExpression));
+
+            var vexpr = (VariableExpression)dotexpr.Expression;
+
+            Assert.AreEqual("foo", vexpr.Name);
+
+            Assert.AreEqual("bar", dotexpr.Name);
+
+            Assert.IsNotNull(dotexpr.Arguments);
+            Assert.AreEqual(1, dotexpr.Arguments.Count);
+            Assert.IsNotNull(dotexpr.Arguments[0]);
+            Assert.IsInstanceOfType(dotexpr.Arguments[0], typeof(ConstantExpression));
+            Assert.AreEqual(42, ((ConstantExpression)dotexpr.Arguments[0]).Value);
+
+            Assert.IsNull(parser.ParseExpression());
         }
 
         [TestMethod]
