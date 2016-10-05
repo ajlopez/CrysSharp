@@ -117,9 +117,31 @@
             var expr = this.ParseSimpleTerm();
 
             while (this.TryParseToken(TokenType.Separator, "."))
-                expr = new DotExpression(expr, this.ParseName(), null);
+            {
+                IList<IExpression> arguments = new List<IExpression>();
+
+                if (this.TryParseToken(TokenType.Separator, "("))
+                    arguments = this.ParseArguments();
+
+                expr = new DotExpression(expr, this.ParseName(), arguments);
+            }
 
             return expr;
+        }
+
+        private IList<IExpression> ParseArguments()
+        {
+            IList<IExpression> arguments = new List<IExpression>();
+
+            while (!this.TryParseToken(TokenType.Separator, ")"))
+            {
+                if (arguments.Count > 0)
+                    this.ParseToken(TokenType.Separator, ",");
+
+                arguments.Add(this.ParseExpression());
+            }
+
+            return arguments;
         }
 
         private IExpression ParseSimpleTerm()
