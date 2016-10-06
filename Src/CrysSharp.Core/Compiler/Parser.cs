@@ -118,12 +118,14 @@
 
             while (this.TryParseToken(TokenType.Separator, "."))
             {
+                String name = this.ParseName();
+
                 IList<IExpression> arguments = new List<IExpression>();
 
                 if (this.TryParseToken(TokenType.Separator, "("))
                     arguments = this.ParseArguments();
 
-                expr = new DotExpression(expr, this.ParseName(), arguments);
+                expr = new DotExpression(expr, name, arguments);
             }
 
             return expr;
