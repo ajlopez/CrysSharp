@@ -120,10 +120,12 @@
             {
                 String name = this.ParseName();
 
-                IList<IExpression> arguments = new List<IExpression>();
+                IList<IExpression> arguments;
 
                 if (this.TryParseToken(TokenType.Separator, "("))
-                    arguments = this.ParseArguments();
+                    arguments = this.ParseEnclosedArguments();
+                else
+                    arguments = this.ParseOpenArguments();
 
                 expr = new DotExpression(expr, name, arguments);
             }
@@ -131,7 +133,7 @@
             return expr;
         }
 
-        private IList<IExpression> ParseArguments()
+        private IList<IExpression> ParseEnclosedArguments()
         {
             IList<IExpression> arguments = new List<IExpression>();
 
@@ -141,6 +143,21 @@
                     this.ParseToken(TokenType.Separator, ",");
 
                 arguments.Add(this.ParseExpression());
+            }
+
+            return arguments;
+        }
+
+        private IList<IExpression> ParseOpenArguments()
+        {
+            IList<IExpression> arguments = new List<IExpression>();
+
+            for (IExpression expr = this.ParseExpression(); expr != null; expr = this.ParseExpression())
+            {
+                arguments.Add(expr);
+
+                if (!this.TryParseToken(TokenType.Separator, ","))
+                    break;
             }
 
             return arguments;
@@ -204,8 +221,12 @@
                 return new ClassVariableExpression(token.Value);
             if (token.Type == TokenType.InstanceVarName)
                 return new InstanceVariableExpression(token.Value);
+            if (token.Type == TokenType.Name)
+                return new VariableExpression(token.Value);
 
-            return new VariableExpression(token.Value);
+            this.lexer.PushToken(token);
+
+            return null;
         }
 
         private IExpression ParseTupleExpression()
