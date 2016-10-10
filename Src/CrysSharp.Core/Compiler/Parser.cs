@@ -116,6 +116,9 @@
         {
             var expr = this.ParseSimpleTerm();
 
+            if (expr == null)
+                return null;
+
             while (this.TryParseToken(TokenType.Separator, "."))
             {
                 String name = this.ParseName();
