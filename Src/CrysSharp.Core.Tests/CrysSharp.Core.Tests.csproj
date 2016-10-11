@@ -48,6 +48,8 @@
     <Compile Include="Compiler\LexerTests.cs" />
     <Compile Include="Compiler\ParserTests.cs" />
     <Compile Include="Expressions\ConstantExpressionTests.cs" />
+    <Compile Include="Expressions\ClassVariableAssignmentExpressionTests.cs" />
+    <Compile Include="Expressions\GlobalVariableAssignmentExpressionTests.cs" />
     <Compile Include="Expressions\DotExpressionTests.cs" />
     <Compile Include="Expressions\InstanceVariableAssignmentExpressionTests.cs" />
     <Compile Include="Expressions\VariableAssignmentExpressionTests.cs" />
