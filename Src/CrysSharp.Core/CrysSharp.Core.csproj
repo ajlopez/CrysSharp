@@ -70,7 +70,7 @@
     <Compile Include="Expressions\CaseEqualityExpression.cs" />
     <Compile Include="Expressions\ClassVariableExpression.cs" />
     <Compile Include="Expressions\InstanceVariableExpression.cs" />
-    <Compile Include="Expressions\GlobalVariableNameExpression.cs" />
+    <Compile Include="Expressions\GlobalVariableExpression.cs" />
     <Compile Include="Expressions\RangeExpression.cs" />
     <Compile Include="Expressions\LessEqualsExpression.cs" />
     <Compile Include="Expressions\GreaterEqualsExpression.cs" />

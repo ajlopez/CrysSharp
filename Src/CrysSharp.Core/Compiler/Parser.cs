@@ -45,6 +45,10 @@
                 if (this.TryParseToken(TokenType.Operator, "="))
                     return new ClassVariableAssignmentExpression(((ClassVariableExpression)expr).Name, this.ParseExpression());
 
+            if (expr is GlobalVariableExpression)
+                if (this.TryParseToken(TokenType.Operator, "="))
+                    return new GlobalVariableAssignmentExpression(((ClassVariableExpression)expr).Name, this.ParseExpression());
+
             return expr;
         }
 
@@ -219,7 +223,7 @@
             }
 
             if (token.Type == TokenType.GlobalVarName)
-                return new GlobalVariableNameExpression(token.Value);
+                return new GlobalVariableExpression(token.Value);
             if (token.Type == TokenType.ClassVarName)
                 return new ClassVariableExpression(token.Value);
             if (token.Type == TokenType.InstanceVarName)
