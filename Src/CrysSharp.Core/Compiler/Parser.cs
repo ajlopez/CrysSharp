@@ -47,7 +47,7 @@
 
             if (expr is GlobalVariableExpression)
                 if (this.TryParseToken(TokenType.Operator, "="))
-                    return new GlobalVariableAssignmentExpression(((ClassVariableExpression)expr).Name, this.ParseExpression());
+                    return new GlobalVariableAssignmentExpression(((GlobalVariableExpression)expr).Name, this.ParseExpression());
 
             return expr;
         }
