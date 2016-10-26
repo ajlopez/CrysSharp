@@ -124,20 +124,23 @@
                 return null;
 
             while (this.TryParseToken(TokenType.Separator, "."))
-            {
-                String name = this.ParseName();
-
-                IList<IExpression> arguments;
-
-                if (this.TryParseToken(TokenType.Separator, "("))
-                    arguments = this.ParseEnclosedArguments();
-                else
-                    arguments = this.ParseOpenArguments();
-
-                expr = new DotExpression(expr, name, arguments);
-            }
+                expr = this.ParseDotExpression(expr);
 
             return expr;
+        }
+
+        private DotExpression ParseDotExpression(IExpression expr)
+        {
+            String name = this.ParseName();
+
+            IList<IExpression> arguments;
+
+            if (this.TryParseToken(TokenType.Separator, "("))
+                arguments = this.ParseEnclosedArguments();
+            else
+                arguments = this.ParseOpenArguments();
+
+            return new DotExpression(expr, name, arguments);
         }
 
         private IList<IExpression> ParseEnclosedArguments()
