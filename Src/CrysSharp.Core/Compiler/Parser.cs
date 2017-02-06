@@ -193,11 +193,7 @@
             }
 
             if (token.Type == TokenType.Separator && token.Value == "(")
-            {
-                IExpression expr = this.ParseExpression();
-                this.ParseToken(TokenType.Separator, ")");
-                return expr;
-            }
+                return ParseEnclosedExpression();
 
             if (token.Type == TokenType.Separator && token.Value == "{")
                 return ParseTupleExpression();
@@ -237,6 +233,13 @@
             this.lexer.PushToken(token);
 
             return null;
+        }
+
+        private IExpression ParseEnclosedExpression()
+        {
+            IExpression expr = this.ParseExpression();
+            this.ParseToken(TokenType.Separator, ")");
+            return expr;
         }
 
         private IExpression ParseTupleExpression()
