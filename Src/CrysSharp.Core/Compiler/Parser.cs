@@ -59,7 +59,7 @@
 
             IExpression expr = this.ParseBinaryExpression(level + 1);
 
-            Token token = this.lexer.NextToken();
+            Token token = this.NextToken();
 
             while (token != null && token.Type == TokenType.Operator && precedence[level].Contains(token.Value))
             {
@@ -108,7 +108,7 @@
                 else if (token.Value == "===")
                     expr = new CaseEqualityExpression(expr, this.ParseBinaryExpression(level + 1));
 
-                token = this.lexer.NextToken();
+                token = this.NextToken();
             }
 
             this.lexer.PushToken(token);
@@ -175,7 +175,7 @@
 
         private IExpression ParseSimpleTerm()
         {
-            var token = this.lexer.NextToken();
+            var token = this.NextToken();
 
             if (token == null)
                 return null;
@@ -246,7 +246,7 @@
         {
             List<IExpression> exprs = new List<IExpression>();
 
-            Token token2 = this.lexer.NextToken();
+            Token token2 = this.NextToken();
 
             if (token2 != null && token2.Type == TokenType.Key)
                 return ParseNamedTupleExpression(token2);
@@ -297,9 +297,14 @@
             return new ArrayExpression(exprs);
         }
 
+        private Token NextToken()
+        {
+            return this.lexer.NextToken();
+        }
+
         private void ParseToken(TokenType type, string value)
         {
-            Token token = this.lexer.NextToken();
+            Token token = this.NextToken();
 
             if (token == null || token.Type != type || token.Value != value)
                 throw new ParserException(string.Format("Expected '{0}'", value));
@@ -307,7 +312,7 @@
 
         private string ParseName()
         {
-            Token token = this.lexer.NextToken();
+            Token token = this.NextToken();
 
             if (token == null || token.Type != TokenType.Name)
                 throw new ParserException("Expected name");
@@ -317,7 +322,7 @@
 
         private string ParseKey()
         {
-            Token token = this.lexer.NextToken();
+            Token token = this.NextToken();
 
             if (token == null || token.Type != TokenType.Key)
                 throw new ParserException("Expected key");
@@ -327,7 +332,7 @@
 
         private bool TryParseToken(TokenType type, string value)
         {
-            Token token = this.lexer.NextToken();
+            Token token = this.NextToken();
 
             if (token != null && token.Type == type && token.Value == value)
                 return true;
