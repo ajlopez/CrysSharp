@@ -111,7 +111,7 @@
                 token = this.NextToken();
             }
 
-            this.lexer.PushToken(token);
+            this.PushToken(token);
 
             return expr;
         }
@@ -230,7 +230,7 @@
             if (token.Type == TokenType.Name)
                 return new VariableExpression(token.Value);
 
-            this.lexer.PushToken(token);
+            this.PushToken(token);
 
             return null;
         }
@@ -251,7 +251,7 @@
             if (token2 != null && token2.Type == TokenType.Key)
                 return ParseNamedTupleExpression(token2);
 
-            this.lexer.PushToken(token2);
+            this.PushToken(token2);
 
             while (!this.TryParseToken(TokenType.Separator, "}"))
             {
@@ -302,6 +302,11 @@
             return this.lexer.NextToken();
         }
 
+        private void PushToken(Token token)
+        {
+            this.lexer.PushToken(token);
+        }
+
         private void ParseToken(TokenType type, string value)
         {
             Token token = this.NextToken();
@@ -337,7 +342,7 @@
             if (token != null && token.Type == type && token.Value == value)
                 return true;
 
-            this.lexer.PushToken(token);
+            this.PushToken(token);
 
             return false;
         }
