@@ -10,6 +10,7 @@
     public class Parser
     {
         private static string[][] precedence = new string[][] {
+            new string[] { "=>" },
             new string[] { "==", "!=", ">", ">=", "<", "<=", "<=>", "===" },
             new string[] { "||", "&&" },
             new string[] { ".." },
@@ -107,6 +108,8 @@
                     expr = new ComparisonExpression(expr, this.ParseBinaryExpression(level + 1));
                 else if (token.Value == "===")
                     expr = new CaseEqualityExpression(expr, this.ParseBinaryExpression(level + 1));
+                else if (token.Value == "=>")
+                    expr = new KeyValueExpression(expr, this.ParseBinaryExpression(level + 1));
 
                 token = this.NextToken();
             }
@@ -259,6 +262,13 @@
                     this.ParseToken(TokenType.Separator, ",");
 
                 exprs.Add(this.ParseExpression());
+            }
+
+            if (exprs.Count > 0 && exprs.All(expr => expr is KeyValueExpression))
+            {
+                IList<KeyValueExpression> keyvalues = exprs.Select(expr => (KeyValueExpression)expr).ToList<KeyValueExpression>();
+
+                return new HashExpression(keyvalues);
             }
 
             return new TupleExpression(exprs);
