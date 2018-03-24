@@ -41,6 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Compiler\ICharStream.cs" />
+    <Compile Include="Expressions\HashExpression.cs" />
+    <Compile Include="Expressions\KeyValueExpression.cs" />
     <Compile Include="Compiler\Lexer.cs" />
     <Compile Include="Compiler\Parser.cs" />
     <Compile Include="Compiler\ParserException.cs" />

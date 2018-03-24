@@ -1293,6 +1293,28 @@
         }
 
         [TestMethod]
+        public void ParseHash()
+        {
+            Parser parser = new Parser("{ 1 => \"one\", 2 => \"two\" }");
+
+            var result = parser.ParseExpression();
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(HashExpression));
+
+            var hashexpr = (HashExpression)result;
+
+            Assert.IsNotNull(hashexpr.Entries);
+            Assert.AreEqual(2, hashexpr.Entries.Count);
+
+            Assert.AreEqual(1, ((ConstantExpression)hashexpr.Entries[0].KeyExpression).Value);
+            Assert.AreEqual("one", ((ConstantExpression)hashexpr.Entries[0].ValueExpression).Value);
+
+            Assert.AreEqual(2, ((ConstantExpression)hashexpr.Entries[1].KeyExpression).Value);
+            Assert.AreEqual("two", ((ConstantExpression)hashexpr.Entries[1].ValueExpression).Value);
+        }
+
+        [TestMethod]
         public void ParseDotExpression()
         {
             Parser parser = new Parser("foo.bar");
