@@ -276,20 +276,19 @@
 
         private IExpression ParseNamedTupleExpression(Token token)
         {
-            List<string> keys = new List<string>();
-            List<IExpression> expressions = new List<IExpression>();
+            IList<NameValueExpression> entries = new List<NameValueExpression>();
 
-            keys.Add(token.Value);
-            expressions.Add(this.ParseExpression());
+            entries.Add(new NameValueExpression(token.Value, this.ParseExpression()));
 
             while (!this.TryParseToken(TokenType.Separator, "}"))
             {
                 this.ParseToken(TokenType.Separator, ",");
-                keys.Add(this.ParseKey());
-                expressions.Add(this.ParseExpression());
+                string name = this.ParseKey();
+                IExpression expr = this.ParseExpression();
+                entries.Add(new NameValueExpression(name, expr));
             }
 
-            return new NamedTupleExpression(keys, expressions);
+            return new NamedTupleExpression(entries);
         }
 
         private IExpression ParseArrayExpression()

@@ -7,17 +7,13 @@
 
     public class NamedTupleExpression : IExpression
     {
-        private List<String> names;
-        private List<IExpression> expressions;
+        private IList<NameValueExpression> entries;
 
-        public NamedTupleExpression(List<String> names, List<IExpression> expressions)
+        public NamedTupleExpression(IList<NameValueExpression> entries)
         {
-            this.names = names;
-            this.expressions = expressions;
+            this.entries = entries;
         }
 
-        public List<String> Names { get { return this.names; } }
-
-        public List<IExpression> Expressions { get { return this.expressions; } }
+        public IList<NameValueExpression> Entries { get { return this.entries; } }
     }
 }

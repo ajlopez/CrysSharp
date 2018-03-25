@@ -1279,17 +1279,16 @@
 
             var ntupleexpr = (NamedTupleExpression)result;
 
-            Assert.IsNotNull(ntupleexpr.Names);
-            Assert.AreEqual(2, ntupleexpr.Names.Count);
+            Assert.IsNotNull(ntupleexpr.Entries);
+            Assert.AreEqual(2, ntupleexpr.Entries.Count);
 
-            Assert.IsNotNull(ntupleexpr.Expressions);
-            Assert.AreEqual(2, ntupleexpr.Expressions.Count);
+            Assert.AreEqual("name", ntupleexpr.Entries[0].Name);
+            Assert.IsInstanceOfType(ntupleexpr.Entries[0].ValueExpression, typeof(ConstantExpression));
+            Assert.AreEqual("Crystal", ((ConstantExpression)ntupleexpr.Entries[0].ValueExpression).Value);
 
-            Assert.IsInstanceOfType(ntupleexpr.Expressions[0], typeof(ConstantExpression));
-            Assert.AreEqual("Crystal", ((ConstantExpression)ntupleexpr.Expressions[0]).Value);
-
-            Assert.IsInstanceOfType(ntupleexpr.Expressions[1], typeof(ConstantExpression));
-            Assert.AreEqual(2011, ((ConstantExpression)ntupleexpr.Expressions[1]).Value);
+            Assert.AreEqual("year", ntupleexpr.Entries[1].Name);
+            Assert.IsInstanceOfType(ntupleexpr.Entries[1].ValueExpression, typeof(ConstantExpression));
+            Assert.AreEqual(2011, ((ConstantExpression)ntupleexpr.Entries[1].ValueExpression).Value);
         }
 
         [TestMethod]
