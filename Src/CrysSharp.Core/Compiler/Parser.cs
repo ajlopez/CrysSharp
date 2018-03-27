@@ -34,21 +34,20 @@
             if (expr == null)
                 return expr;
 
-            if (expr is VariableExpression)
-                if (this.TryParseToken(TokenType.Operator, "="))
+            if (this.TryParseToken(TokenType.Operator, "="))
+            {
+                if (expr is VariableExpression)
                     return new VariableAssignmentExpression(((VariableExpression)expr).Name, this.ParseExpression());
 
-            if (expr is InstanceVariableExpression)
-                if (this.TryParseToken(TokenType.Operator, "="))
-                    return new InstanceVariableAssignmentExpression(((InstanceVariableExpression)expr).Name, this.ParseExpression());
+                if (expr is InstanceVariableExpression)
+                   return new InstanceVariableAssignmentExpression(((InstanceVariableExpression)expr).Name, this.ParseExpression());
 
-            if (expr is ClassVariableExpression)
-                if (this.TryParseToken(TokenType.Operator, "="))
-                    return new ClassVariableAssignmentExpression(((ClassVariableExpression)expr).Name, this.ParseExpression());
+                if (expr is ClassVariableExpression)
+                   return new ClassVariableAssignmentExpression(((ClassVariableExpression)expr).Name, this.ParseExpression());
 
-            if (expr is GlobalVariableExpression)
-                if (this.TryParseToken(TokenType.Operator, "="))
+                if (expr is GlobalVariableExpression)
                     return new GlobalVariableAssignmentExpression(((GlobalVariableExpression)expr).Name, this.ParseExpression());
+            }
 
             return expr;
         }
